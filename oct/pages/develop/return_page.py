@@ -1,9 +1,7 @@
 from selenium.webdriver import Chrome
 
-from base.base import Page, Success
-from base.elements import RadioButton, RadioButtonGroup, Form, Block, InputField
-
-# host = 'demo.opencart.com'
+from pages.base.base import Page
+from pages.base.elements import RadioButton, RadioButtonGroup, Form, Block, InputField
 
 
 class Reason(RadioButtonGroup):

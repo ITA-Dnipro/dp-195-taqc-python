@@ -1,10 +1,23 @@
 from abc import ABC
+import time
 
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
-from drivers import driver
+from pages.drivers import driver
+
+
+def timeout(timesec: int):
+    def deco(func):
+        def wrapper(self):
+            countdown = time.time()
+            while (time.time() - countdown) < timesec:
+                if func(self) is True:
+                    return func(self)
+            return func(self)
+        return wrapper
+    return deco
 
 
 class Base(ABC):
@@ -58,10 +71,12 @@ class Page(Base):
 
     def __init__(self, refference: WebDriver = driver):
         super().__init__(refference)
+        print(self._reff)
 
     url = ''
 
     @property
+    @timeout(5)
     def is_available(self):
         """Check if this page is currently open in the browser"""
 
@@ -88,7 +103,7 @@ class Page(Base):
     def close(self):
         """Close Page"""
 
-        self._driver.close()
+        self._reff.close()
 
 
 class Success(Base):
@@ -100,6 +115,7 @@ class Success(Base):
     url = 'success'
 
     @property
+    @timeout(5)
     def is_available(self):
         return self.url in self._reff.current_url
 
