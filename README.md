@@ -18,6 +18,7 @@ The following directories tree outlines the most important information about pro
 ├── docker-compose.yaml       <= This file running app in docker
 ├── requirements.txt          <= Python packages for automated tests execution
 ├── requirements-dev.txt      <= Python packages for quality of the code
+└── code-assessment.sh        <= This file running tools for code quality evaluation
 ```
 
 ## Usage of automated tests (without Docker)
