@@ -1,6 +1,6 @@
 # DP-195 group project
 
-This README is development purposes!
+This README is for development purposes!
 
 ## Project structure
 The following directories tree outlines the most important information about project structure:
