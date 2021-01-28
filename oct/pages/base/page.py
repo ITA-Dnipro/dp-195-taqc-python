@@ -59,7 +59,7 @@ class SearchBar(Block):
         self.go.click()
 
 
-class Descktop(Clickable):
+class Desktop(Clickable):
 
     contains = {
         "pc": {
@@ -130,7 +130,7 @@ class NavBar(Block):
     contains = {
         "pc": {
             "locator": ("XPATH", '//*[@id="menu"]/div[2]/ul/li[1]'),
-            "class": Descktop
+            "class": Desktop
         },
         "laptop": {
             "locator": ("XPATH", '//*[@id="menu"]/div[2]/ul/li[2]'),
@@ -229,25 +229,25 @@ class BasePage(Page):
 
     @property
     def header(self):
-        element = self._reff.find_element(By.ID, "top")
+        element = self._base.find_element(By.ID, "top")
         return Header(element)
 
     @property
     def cart_status(self):
-        element = self._reff.find_element(By.ID, "cart")
+        element = self._base.find_element(By.ID, "cart")
         return Clickable(element)
 
     @property
     def search(self):
-        element = self._reff.find_element(By.ID, "search")
+        element = self._base.find_element(By.ID, "search")
         return SearchBar(element)
 
     @property
     def navbar(self):
-        element = self._reff.find_element(By.ID, "menu")
+        element = self._base.find_element(By.ID, "menu")
         return NavBar(element)
 
     @property
     def footer(self):
-        element = self._reff.find_element(By.TAG_NAME, "footer")
+        element = self._base.find_element(By.TAG_NAME, "footer")
         return Footer(element)

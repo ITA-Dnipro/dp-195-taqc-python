@@ -12,8 +12,8 @@ class InputField(Element):
     def fill(self, text):
         """Write something"""
         if text is not None:
-            self._reff.clear()
-            self._reff.send_keys(text)
+            self._base.clear()
+            self._base.send_keys(text)
 
 
 class Clickable(Element):
@@ -21,7 +21,7 @@ class Clickable(Element):
 
     def click(self):
         """Click it"""
-        self._reff.click()
+        self._base.click()
 
 
 class Selectable(Element):
@@ -29,7 +29,7 @@ class Selectable(Element):
 
     def is_selected(self):
         """Check if selected"""
-        return self._reff.is_selected()
+        return self._base.is_selected()
 
 
 class RadioButton(Selectable, Clickable):
@@ -39,11 +39,6 @@ class RadioButton(Selectable, Clickable):
 
 class CheckBox(Selectable, Clickable):
     """General checkbox, which can be selected by clicking on it"""
-    pass
-
-
-class DropDown(Clickable):
-    """This is basically a clickable container"""
     pass
 
 
@@ -83,7 +78,7 @@ class Form(Element):
     """Generic form"""
 
     def submit(self):
-        self._reff.submit()
+        self._base.submit()
 
 
 class ProductThumb(Element):
