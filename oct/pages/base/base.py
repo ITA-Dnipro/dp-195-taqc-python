@@ -20,6 +20,9 @@ def timeout(timesec: int):
     return deco
 
 
+WAIT = 5
+
+
 class Base(ABC):
     """Blueprint for Page and Element classes"""
 
@@ -28,6 +31,9 @@ class Base(ABC):
 
     contains = dict()
     """
+    contains class attribute contains page's static webelements. Webelements set
+    is the page specific.
+    Example:
     contains = {
         elementName: {
             "locator": (by, value),
@@ -35,9 +41,19 @@ class Base(ABC):
         },
     }
     """
+    loads = dict()
+    """
+    load class attribute contains page's dynamically generated webelements (if any).
+    Use for pages where dynamically generated content is the subject of testing.
+    Example:
+    loads = {
+        "group locator": (),
+        "class": Element
+    }
+    """
 
     def _setup(self):
-        """Create obj atributes from self.contains"""
+        """Create obj atributes from self.contains and self.loads"""
 
         if self.contains:
             for key, val in self.contains.items():
@@ -49,6 +65,20 @@ class Base(ABC):
                         self._get_instance(
                             by=find_by, value=locator_value, elcls=element_class)
                         )
+
+        if self.loads:
+            setattr(self, 'elements_loaded', 0)
+
+            locator_name, locator_value = self.loads.get('group locator')
+            element_class = self._check_class(self.loads.get('class'))
+            find_by = getattr(By, locator_name.upper())
+
+            elements = self._reff.find_elements(find_by, locator_value)
+            for index, element in enumerate(elements):
+                attr = ("%s_%d" % (element_class.__name__.lower(), index))
+
+                setattr(self, attr, element_class(element))
+                self.elements_loaded += 1
 
     def _check_class(self, elcls):
         """Check class of a contained object"""
@@ -71,12 +101,11 @@ class Page(Base):
 
     def __init__(self, refference: WebDriver = driver):
         super().__init__(refference)
-        print(self._reff)
 
     url = ''
 
     @property
-    @timeout(5)
+    @timeout(WAIT)
     def is_available(self):
         """Check if this page is currently open in the browser"""
 
@@ -115,7 +144,7 @@ class Success(Base):
     url = 'success'
 
     @property
-    @timeout(5)
+    @timeout(WAIT)
     def is_available(self):
         return self.url in self._reff.current_url
 
@@ -126,3 +155,7 @@ class Element(Base):
     def __init__(self, refference: WebElement):
         super().__init__(refference)
         self._setup()
+
+    @property
+    def text(self):
+        return self._reff.text

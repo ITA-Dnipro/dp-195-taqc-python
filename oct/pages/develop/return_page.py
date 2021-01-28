@@ -1,6 +1,4 @@
-from selenium.webdriver import Chrome
-
-from pages.base.base import Page
+from pages.base.page import BasePage
 from pages.base.elements import RadioButton, RadioButtonGroup, Form, Block, InputField
 
 
@@ -132,7 +130,7 @@ class ReturnForm(Form):
         self.product.details.fill(kwargs.get('details'))
 
 
-class ReturnPage(Page):
+class ReturnPage(BasePage):
 
     url = 'index.php?route=account/return/add'
 
@@ -142,23 +140,3 @@ class ReturnPage(Page):
             'class': ReturnForm
         },
     }
-
-
-# if __name__ == "__main__":
-#     page = ReturnPage()
-#     page.load(host)
-#     page.form.fill_out(
-#         first_name='John',
-#         last_name='Doe',
-#         email='kek@gmail.com',
-#         telephone='2212211',
-#         order_id='5',
-#         product_name='iphone',
-#         product_code='i5',
-#         reason='wrong',
-#         is_opened='yes',
-#         details='asdsdsadasdsddwwscscew'
-#     )
-#     page.form.submit()
-#     # print(page.get_alerts())
-#     assert Success().is_available

@@ -16,15 +16,6 @@ class InputField(Element):
             self._reff.send_keys(text)
 
 
-class DynamicText(Element):
-    """Elements whih dynamicly generated text"""
-
-    @property
-    def text(self):
-        """General property for testing purposes"""
-        self._reff.text
-
-
 class Clickable(Element):
     """Any type of a clickable element"""
 
@@ -93,3 +84,33 @@ class Form(Element):
 
     def submit(self):
         self._reff.submit()
+
+
+class ProductThumb(Element):
+    """Product thumb block"""
+
+    contains = {
+        'caption': {
+            'locator': ("CLASS_NAME", "caption"),
+            'class': Element
+        },
+        'link': {
+            'locator': ("TAG_NAME", "a"),
+            'class': Clickable
+        },
+        'cart': {
+            'locator': ("CLASS_NAME", "fa-shopping-cart"),
+            'class': Clickable
+        },
+        'wish': {
+            'locator': ("CLASS_NAME", "fa-heart"),
+            'class': Clickable
+        },
+        'compare': {
+            'locator': ("CLASS_NAME", "fa-exchange"),
+            'class': Clickable
+        },
+    }
+
+    def click(self):
+        self.link.click()
