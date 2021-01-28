@@ -1,9 +1,5 @@
+import importlib
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
-from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from webdriver_manager.opera import OperaDriverManager
 
 from enum import Enum
 
@@ -18,16 +14,38 @@ class Browser(Enum):
 
 def get_driver(browser=Browser.CHROME):
 
-    if browser == 'chrome':
-        return webdriver.Chrome(ChromeDriverManager().install())
-    if browser == 'chromium':
-        return webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-    if browser == 'firefox':
-        return webdriver.Firefox(executable_path=GeckoDriverManager().install())
-    if browser == 'opera':
-        return webdriver.Edge(EdgeChromiumDriverManager().install())
-    if browser == 'edge':
-        return webdriver.Opera(executable_path=OperaDriverManager().install())
+    if browser.value == 'chrome':
+        manager = importlib.import_module(
+            name='webdriver_manager.chrome')
+        options = webdriver.ChromeOptions()
+        options.add_argument('--ignore-ssl-errors=yes')
+        options.add_argument('--ignore-certificate-errors')
+        return webdriver.Chrome(manager.ChromeDriverManager().install(), options=options)
+
+    if browser.value == 'chromium':
+        manager = importlib.import_module(
+            name='webdriver_manager.chrome')
+        option = importlib.import_module(
+            name='webdriver_manager.utils')
+        return webdriver.Chrome(
+            manager.ChromeDriverManager(
+                chrome_type=option.ChromeType.CHROMIUM).install()
+        )
+
+    if browser.value == 'firefox':
+        manager = importlib.import_module(
+            name='webdriver_manager.firefox')
+        return webdriver.Firefox(executable_path=manager.GeckoDriverManager().install())
+
+    if browser.value == 'edge':
+        manager = importlib.import_module(
+            name='webdriver_manager.microsoft')
+        return webdriver.Edge(manager.EdgeChromiumDriverManager().install())
+
+    if browser.value == 'opera':
+        manager = importlib.import_module(
+            name='webdriver_manager.opera')
+        return webdriver.Opera(executable_path=manager.OperaDriverManager().install())
 
 
 driver = get_driver(Browser.CHROME)
