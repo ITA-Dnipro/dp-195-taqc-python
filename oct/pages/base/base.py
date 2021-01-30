@@ -1,5 +1,8 @@
-from abc import ABC
+"""Module contains base classes for page objects and webelements."""
+
 import time
+from abc import ABC
+from typing import Any, Union, Type, List, Optional
 
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -9,15 +12,19 @@ from pages.drivers import driver
 
 
 def timeout(timesec: int):
+    """Page loading timeout decorator."""
+
     def deco(func):
-        def wrapper(self):
+        def wrapper(self) -> bool:
             countdown = time.time()
             while (time.time() - countdown) < timesec:
                 result = func(self)
                 if result is True:
                     return result
             return func(self)
+
         return wrapper
+
     return deco
 
 
@@ -25,12 +32,12 @@ WAIT = 5
 
 
 class Base(ABC):
-    """Blueprint for Page and Element classes"""
+    """Blueprint for Page and Element classes."""
 
-    def __init__(self, base):
+    def __init__(self, base: Any) -> None:
         self._base = base
 
-    contains = dict()
+    contains: Optional[dict] = None
     """
     contains class attribute contains page's webelements. Webelements set
     is the page specific.
@@ -57,114 +64,109 @@ class Base(ABC):
     }
     """
 
-    def _setup(self):
-        """Create obj atributes from self.contains"""
+    def _setup(self) -> None:
+        """Create obj atributes from self.contains."""
 
         if self.contains:
             for key, val in self.contains.items():
 
-                if val.get('is_loaded') is True:
-                    """Add laoded webelements to the object"""
+                if val.get("is_loaded") is True:
+                    # Add laoded webelements to the object
 
-                    setattr(self, 'elements_loaded', 0)
-                    locator_name, locator_value = val.get('locator')
-                    element_class = self._check_class(val.get('class'))
+                    locator_name, locator_value = val.get("locator")
+                    elcls = self.check_class(val.get("class"))
                     find_by = getattr(By, locator_name.upper())
 
                     elements = self._base.find_elements(find_by, locator_value)
-
-                    for index, element in enumerate(elements):
-                        attr = f"{element_class.__name__.lower()}_{index}"
-                        setattr(self, attr, element_class(element))
-                        self.elements_loaded += 1
+                    attr = f"{elcls.__name__.lower()}s"
+                    setattr(self, attr, [elcls(element)
+                                         for element in elements])
+                    setattr(self, f"{attr}_loaded", len(elements))
 
                 else:
-                    """Add static webelements to the object"""
+                    # Add static webelements to the object
 
-                    locator_name, locator_value = val.get('locator')
-                    element_class = self._check_class(val.get('class'))
+                    locator_name, locator_value = val.get("locator")
+                    elcls = self.check_class(val.get("class"))
                     find_by = getattr(By, locator_name.upper())
-                    setattr(self, key,
-                            self._get_instance(
-                                by=find_by, value=locator_value, elcls=element_class)
-                            )
+                    setattr(self, key, self.get_instance(
+                        find_by, locator_value, elcls))
 
-    def _check_class(self, elcls):
-        """Check class of a contained object"""
+    @staticmethod
+    def check_class(elcls: Type["Element"]) -> Union[Type["Element"], None]:
+        """Check class of a contained object."""
 
         if issubclass(elcls, Element):
             return elcls
 
         raise TypeError(
-            'Contained object has to be an instance of the Element class!')
+            "Contained object has to be an instance of the Element class!")
 
-    def _get_instance(self, by, value, elcls):
-        """Create instance of Element class"""
+    def get_instance(self, find_by: str, value: str, elcls: Type["Element"]) -> WebElement:
+        """Create instance of Element class."""
 
-        element = self._base.find_element(by, value)
+        element = self._base.find_element(find_by, value)
         return elcls(element)
 
 
 class Page(Base):
-    """Generic Page class"""
+    """Basic page class."""
 
     def __init__(self, base: WebDriver = driver):
         super().__init__(base)
 
-    url = ''
+    url = ""
 
     @property
     @timeout(WAIT)
-    def is_available(self):
-        """Check if this page is currently open in the browser"""
+    def is_available(self) -> bool:
+        """Check if this page is currently open in the browser."""
 
         return self.url in self._base.current_url
 
-    def get_alerts(self):
-        """Get all alert pop-ups from the page, used for testing"""
+    def get_alerts(self) -> List[str]:
+        """Get all alert pop-ups from the page, used for testing."""
 
         warn_texts = [
-            el.text for el in self._base.find_elements_by_class_name('text-danger')
-        ]
+            el.text for el in self._base.find_elements_by_class_name("text-danger")]
         alerts = [
-            el.text for el in self._base.find_elements_by_class_name('alert')
-        ]
+            el.text for el in self._base.find_elements_by_class_name("alert")]
         return warn_texts + alerts
 
-    def load(self, host):
-        """Load page"""
+    def load(self, host: str) -> None:
+        """Load page."""
 
-        self._base.get(f'https://{host}/{self.url}')
+        self._base.get(f"https://{host}/{self.url}")
         self._base.maximize_window()
         self._setup()
 
-    def close(self):
-        """Close Page"""
+    def close(self) -> None:
+        """Close Page."""
 
         self._base.close()
 
 
 class Success(Base):
-    """Success Page class, do not inherit"""
+    """Success page class, do not inherit."""
 
     def __init__(self, base: WebDriver = driver):
         super().__init__(base)
 
-    url = 'success'
+    url = "success"
 
     @property
     @timeout(WAIT)
-    def is_available(self):
+    def is_available(self) -> bool:
         return self.url in self._base.current_url
 
 
 class Element(Base):
-    """Generic Element class"""
+    """Basic weblement class."""
 
     def __init__(self, base: WebElement):
         super().__init__(base)
         self._setup()
 
     @property
-    def text(self):
+    def text(self) -> str:
         return self._base.text
