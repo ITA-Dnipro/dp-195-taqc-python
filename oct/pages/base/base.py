@@ -79,8 +79,7 @@ class Base(ABC):
 
                     elements = self._base.find_elements(find_by, locator_value)
                     attr = f"{elcls.__name__.lower()}s"
-                    setattr(self, attr, [elcls(element)
-                                         for element in elements])
+                    setattr(self, attr, [elcls(element) for element in elements])
                     setattr(self, f"{attr}_loaded", len(elements))
 
                 else:
@@ -89,8 +88,7 @@ class Base(ABC):
                     locator_name, locator_value = val.get("locator")
                     elcls = self.check_class(val.get("class"))
                     find_by = getattr(By, locator_name.upper())
-                    setattr(self, key, self.get_instance(
-                        find_by, locator_value, elcls))
+                    setattr(self, key, self.get_instance(find_by, locator_value, elcls))
 
     @staticmethod
     def check_class(elcls: Type["Element"]) -> Union[Type["Element"], None]:
@@ -99,8 +97,7 @@ class Base(ABC):
         if issubclass(elcls, Element):
             return elcls
 
-        raise TypeError(
-            "Contained object has to be an instance of the Element class!")
+        raise TypeError("Contained object has to be an instance of the Element class!")
 
     def get_instance(self, find_by: str, value: str, elcls: Type["Element"]) -> WebElement:
         """Create instance of Element class."""
@@ -127,10 +124,8 @@ class Page(Base):
     def get_alerts(self) -> List[str]:
         """Get all alert pop-ups from the page, used for testing."""
 
-        warn_texts = [
-            el.text for el in self._base.find_elements_by_class_name("text-danger")]
-        alerts = [
-            el.text for el in self._base.find_elements_by_class_name("alert")]
+        warn_texts = [el.text for el in self._base.find_elements_by_class_name("text-danger")]
+        alerts = [el.text for el in self._base.find_elements_by_class_name("alert")]
         return warn_texts + alerts
 
     def load(self, host: str) -> None:
