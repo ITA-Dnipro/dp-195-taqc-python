@@ -11,6 +11,8 @@
 disable=
     bad-continuation,
     missing-docstring,
+    too-many-ancestors,
+    no-member,
 
 [BASIC]
 # Regular expression matching correct constant names
@@ -39,7 +41,7 @@ max-locals=10
 max-returns=2
 
 # Maximum number of branch for function / method body
-max-branches=2
+max-branches=5
 
 # Maximum number of statements in function / method body
 max-statements=50

@@ -7,10 +7,9 @@ add_fail() {
 }
 
 black --check . || add_fail black
-pylint demo || add_fail pylint
-flake8 demo || add_fail flake8
-pydocstyle demo || add_fail pydocstyle
-mypy demo || add_fail mypy
+pylint oct || add_fail pylint
+flake8 oct || add_fail flake8
+pydocstyle oct || add_fail pydocstyle
 if [[ ${#FAILURES[@]} -ne 0 ]]; then
     cat <<RESULT
 
