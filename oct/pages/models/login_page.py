@@ -2,7 +2,7 @@ from pages.base.page import BasePage
 from pages.base.elements import Form, Block, InputField, Clickable
 
 
-class NewCustomButton(Block):
+class NewCustomerButton(Block):
     contains = {
         "button": {"locator":("XPATH", "//*[@id=\"content\"]/div/div[1]/div/a"), "class": Clickable}
     }
