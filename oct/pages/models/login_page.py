@@ -1,5 +1,11 @@
 from pages.base.page import BasePage
-from pages.base.elements import Form, Block, InputField
+from pages.base.elements import Form, Block, InputField, Clickable
+
+
+class NewCastomButton(Block):
+    contains = {
+        "button": {"locator":("XPATH", "//*[@id=\"content\"]/div/div[1]/div/a"), "class": Clickable}
+    }
 
 
 class ReturningCustomer(Block):
@@ -19,9 +25,19 @@ class LoginForm(Form):
         self.personal.password.fill(kwargs.get("password"))
 
 
+class NewCastomer(Block):
+    contains = {
+        'action': {"locator": ("CLASS_NAME", "btn-primary"), "class": NewCastomerButton}
+    }
+
+    def click_button(self):
+        self.action.button.click()
+
+
 class LoginPage(BasePage):
     url = "index.php?route=account/login"
 
     contains = {
         "form": {"locator": ("XPATH", "//*[@id=\"content\"]/div/div[2]/div/form"), "class": LoginForm},
+        "action": {"locator": ("XPATH", "//*[@id=\"content\"]/div/div[1]/div"), "class": NewCastomer}
     }
