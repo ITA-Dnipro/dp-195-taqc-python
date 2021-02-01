@@ -4,12 +4,25 @@ from pages.base.elements import Block, Clickable
 
 class AddressBookEntries(Block):
     contains = {
-        "edit_button": {"locator": ("XPATH", "//a[@class='btn btn-info']"), "class": Clickable},
-        "delete_button": {"locator": ("XPATH", "//a[@class='btn btn-danger']"), "class": Clickable}
+        "edit_button": {
+            "locator": ("CSS_SELECTOR", "a.btn.btn-info"),
+            "class": Clickable
+        },
+        "delete_button": {
+            "locator": ("CSS_SELECTOR", "a.btn.btn-danger"),
+            "class": Clickable
+        }
     }
 
 
-class NewAddressButton(Clickable):
+class ButtonsClearfix(Clickable):
     contains = {
-        "btn": {"locator": ("XPATH", "//*[@id='content']/div[2]/div[2]/a"), "class": Clickable}
+        "back_button": {
+            "locator": ("CSS_SELECTOR", "a.btn.btn-default"),
+            "class": Clickable
+        },
+        "delete_button": {
+            "locator": ("CSS_SELECTOR", "a.btn.btn-primary"),
+            "class": Clickable
+        }
     }
