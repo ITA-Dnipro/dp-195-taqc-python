@@ -4,7 +4,7 @@ import time
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
-import requests
+from requests import Request, Session
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -141,8 +141,8 @@ class Page(Base):
 
         data = {"email": email, "password": password}
         url = f"https://{host}/index.php?route=account/login"
-        request = requests.Request(method="POST", url=url, data=data)
-        session = requests.Session()
+        request = Request(method="POST", url=url, data=data)
+        session = Session()
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
