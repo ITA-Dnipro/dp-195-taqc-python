@@ -79,10 +79,10 @@ class Base(ABC):
                 if val.get("is_loaded") is True:
 
                     with contextlib.suppress(NoSuchElementException):
-                        attr = f"{elcls.__name__.lower()}s"
+                        attr = key
                         attr_value = self.get_list_of_instances(find_by, locator_value, elcls)
                         setattr(self, attr, attr_value)
-                        setattr(self, f"{attr}_loaded", len(attr_value))
+                        setattr(self, f"{key}_loaded", len(attr_value))
 
                 else:
 
