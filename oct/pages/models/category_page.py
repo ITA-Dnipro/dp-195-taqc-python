@@ -87,8 +87,3 @@ class CategoryPage(BasePage):
             "is_loaded": True,
         },
     }
-
-
-if __name__ == "__main__":
-    page = CategoryPage(path="path=25")
-    page.load("1881010.soniccv.web.hosting-test.net")
