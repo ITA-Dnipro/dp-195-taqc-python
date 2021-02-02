@@ -1,24 +1,22 @@
-from pages.base.elements import Form, InputField, Clickable, Block
-from pages.base.page import BasePage
+from oct.pages.base.elements import Form, InputField, Clickable, Block
+from oct.pages.base.page import BasePage
 
 
 class InfoTableRow(Block):
     contains = {
         "name": {"locator": ("CSS_SELECTOR", "td:first-child > strong"), "class": Block},
-        "value": {"locator": ("CSS_SELECTOR", "td:last-child"), "class": Block}
+        "value": {"locator": ("CSS_SELECTOR", "td:last-child"), "class": Block},
     }
 
 
 class InfoTable(Block):
-    contains = {
-        "rows": {"locator": ("TAG_NAME", "tr"), "class": InfoTableRow, "is_loaded": True}
-    }
+    contains = {"rows": {"locator": ("TAG_NAME", "tr"), "class": InfoTableRow, "is_loaded": True}}
 
 
 class CertificateForm(Block):
     contains = {
         "gift_certificate": {"locator": ("NAME", "voucher"), "class": InputField},
-        "apply_gift_certificate": {"locator": ("ID", "button-voucher"), "class": Clickable}
+        "apply_gift_certificate": {"locator": ("ID", "button-voucher"), "class": Clickable},
     }
 
     def fill_out(self, **kwargs: str) -> None:
@@ -31,7 +29,7 @@ class CertificateForm(Block):
 class CouponForm(Block):
     contains = {
         "coupon": {"locator": ("NAME", "coupon"), "class": InputField},
-        "apply_coupon": {"locator": ("ID", "button-coupon"), "class": Clickable}
+        "apply_coupon": {"locator": ("ID", "button-coupon"), "class": Clickable},
     }
 
     def fill_out(self, **kwargs: str) -> None:
@@ -46,8 +44,8 @@ class QuantityForm(Form):
         "quantity": {"locator": ("CSS_SELECTOR", "[type='text']"), "class": InputField},
         "button_remove": {
             "locator": ("CSS_SELECTOR", ".btn-danger[type='button']"),
-            "class": Clickable
-        }
+            "class": Clickable,
+        },
     }
 
 
@@ -56,32 +54,23 @@ class ShoppingCartPage(BasePage):
     contains = {
         "quantity_form": {
             "locator": ("XPATH", '//*[@id="content"]/form/div/table/tbody/tr/td[4]'),
-            "class": QuantityForm
+            "class": QuantityForm,
         },
         "use_coupon_code_dropdown": {
             "locator": ("PARTIAL_LINK_TEXT", "Use Coupon Code"),
-            "class": Clickable
+            "class": Clickable,
         },
-        "coupon_form": {
-            "locator": ("ID", "collapse-coupon"),
-            "class": CouponForm
-        },
+        "coupon_form": {"locator": ("ID", "collapse-coupon"), "class": CouponForm},
         "use_gift_certificate_dropdown": {
             "locator": ("PARTIAL_LINK_TEXT", "Use Gift Certificate"),
-            "class": Clickable
+            "class": Clickable,
         },
-        "certificate_form": {
-            "locator": ("ID", "collapse-voucher"),
-            "class": CertificateForm
-        },
+        "certificate_form": {"locator": ("ID", "collapse-voucher"), "class": CertificateForm},
         "info_table": {
             "locator": ("XPATH", '//*[@id="content"]/div[2]/div/table'),
-            "class": InfoTable
+            "class": InfoTable,
         },
-        "checkout_button": {
-            "locator": ("PARTIAL_LINK_TEXT", "Checkout"),
-            "class": Clickable
-        }
+        "checkout_button": {"locator": ("PARTIAL_LINK_TEXT", "Checkout"), "class": Clickable},
     }
 
     @property

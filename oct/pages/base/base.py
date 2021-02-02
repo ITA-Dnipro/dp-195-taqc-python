@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
-from pages.drivers import driver
+from oct.pages.drivers import driver
 
 
 def timeout(timesec: int):

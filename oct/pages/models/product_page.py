@@ -1,5 +1,5 @@
-from pages.base.page import BasePage
-from pages.base.elements import RadioButton, RadioButtonGroup, Block, InputField, Clickable
+from oct.pages.base.page import BasePage
+from oct.pages.base.elements import RadioButton, RadioButtonGroup, Block, InputField, Clickable
 
 
 class AddToCart(Block):
