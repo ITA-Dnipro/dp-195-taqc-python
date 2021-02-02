@@ -4,6 +4,7 @@ import time
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
+from requests import Request, Session
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -135,6 +136,16 @@ class Page(Base):
         self._base.maximize_window()
         self._setup()
 
+    def add_logged_in_cookie_session(self, host: str, email: str, password: str) -> None:
+        """Add logged in cookie session"""
+
+        data = {"email": email, "password": password}
+        url = f"https://{host}/index.php?route=account/login"
+        request = Request(method="POST", url=url, data=data)
+        session = Session()
+        session.send(request.prepare(), verify=False)
+        self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
+
     def close(self) -> None:
         """Close Page."""
 
@@ -165,3 +176,8 @@ class Element(Base):
     @property
     def text(self) -> str:
         return self._base.text
+
+    @property
+    @timeout(WAIT)
+    def is_displayed(self) -> bool:
+        return self._base.is_displayed()
