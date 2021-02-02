@@ -21,7 +21,7 @@ class ButtonsClearfix(Clickable):
             "locator": ("CSS_SELECTOR", "a.btn.btn-default"),
             "class": Clickable
         },
-        "delete_button": {
+        "new_address_button": {
             "locator": ("CSS_SELECTOR", "a.btn.btn-primary"),
             "class": Clickable
         }
