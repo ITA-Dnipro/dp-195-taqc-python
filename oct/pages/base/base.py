@@ -71,14 +71,14 @@ class Base(ABC):
             for key, val in self.contains.items():
 
                 if val.get("is_loaded") is True:
-                    # Add laoded webelements to the object
+                    # Add loaded webelements to the object
 
                     locator_name, locator_value = val.get("locator")
                     elcls = self.check_class(val.get("class"))
                     find_by = getattr(By, locator_name.upper())
 
                     elements = self._base.find_elements(find_by, locator_value)
-                    attr = f"{elcls.__name__.lower()}s"
+                    attr = key
                     setattr(self, attr, [elcls(element) for element in elements])
                     setattr(self, f"{attr}_loaded", len(elements))
 
