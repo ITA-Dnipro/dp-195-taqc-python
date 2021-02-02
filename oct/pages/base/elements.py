@@ -89,3 +89,14 @@ class ProductThumb(Element):
 
     def click(self) -> None:
         self.link.click()
+
+
+class Link(Element):
+    """Redirection link."""
+
+    @property
+    def href(self):
+        link = self._base.get_attribute("href")
+        if link is None:
+            link = self._base.get_attribute("value")
+        return link
