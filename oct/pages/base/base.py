@@ -1,13 +1,15 @@
 """Module contains base classes for page objects and webelements."""
 
 import time
+import contextlib
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
-import requests
+from requests import Request, Session
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 from pages.drivers import driver
 
@@ -71,25 +73,24 @@ class Base(ABC):
         if self.contains:
             for key, val in self.contains.items():
 
+                locator_name, locator_value = val.get("locator")
+                elcls = self.check_class(val.get("class"))
+                find_by = getattr(By, locator_name.upper())
+
                 if val.get("is_loaded") is True:
-                    # Add loaded webelements to the object
 
-                    locator_name, locator_value = val.get("locator")
-                    elcls = self.check_class(val.get("class"))
-                    find_by = getattr(By, locator_name.upper())
-
-                    elements = self._base.find_elements(find_by, locator_value)
-                    attr = key
-                    setattr(self, attr, [elcls(element) for element in elements])
-                    setattr(self, f"{attr}_loaded", len(elements))
+                    with contextlib.suppress(NoSuchElementException):
+                        attr = key
+                        attr_value = self.get_list_of_instances(find_by, locator_value, elcls)
+                        setattr(self, attr, attr_value)
+                        setattr(self, f"{key}_loaded", len(attr_value))
 
                 else:
-                    # Add static webelements to the object
 
-                    locator_name, locator_value = val.get("locator")
-                    elcls = self.check_class(val.get("class"))
-                    find_by = getattr(By, locator_name.upper())
-                    setattr(self, key, self.get_instance(find_by, locator_value, elcls))
+                    with contextlib.suppress(NoSuchElementException):
+                        attr = key
+                        attr_value = self.get_instance(find_by, locator_value, elcls)
+                        setattr(self, attr, attr_value)
 
     @staticmethod
     def check_class(elcls: Type["Element"]) -> Union[Type["Element"], None]:
@@ -100,11 +101,19 @@ class Base(ABC):
 
         raise TypeError("Contained object has to be an instance of the Element class!")
 
-    def get_instance(self, find_by: str, value: str, elcls: Type["Element"]) -> WebElement:
+    def get_instance(self, find_by: str, value: str, elcls: Type["Element"]) -> "Element":
         """Create instance of Element class."""
 
         element = self._base.find_element(find_by, value)
         return elcls(element)
+
+    def get_list_of_instances(
+        self, find_by: str, value: str, elcls: Type["Element"]
+    ) -> List["Element"]:
+        """Create instance of Element class."""
+
+        elements = self._base.find_elements(find_by, value)
+        return [elcls(element) for element in elements]
 
 
 class Page(Base):
@@ -136,15 +145,22 @@ class Page(Base):
         self._base.maximize_window()
         self._setup()
 
+    def redirect_from(self, link: str) -> None:
+        """Load page from external link."""
+
+        self._base.get(link)
+        self._setup()
+
     def add_logged_in_cookie_session(self, host: str, email: str, password: str) -> None:
         """Add logged in cookie session"""
 
         data = {"email": email, "password": password}
         url = f"https://{host}/index.php?route=account/login"
-        request = requests.Request(method="POST", url=url, data=data)
-        session = requests.Session()
+        request = Request(method="POST", url=url, data=data)
+        session = Session()
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
+
 
     def close(self) -> None:
         """Close Page."""
