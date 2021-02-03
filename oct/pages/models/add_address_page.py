@@ -27,7 +27,7 @@ class AddAddressForm(Form):
         "country": {"locator": ("ID", "input-country"), "class": DropDown},
         "region_state": {"locator": ("ID", "input-zone"), "class": DropDown},
         "default_address": {
-            "XPATH": ("ID", '//*[@id="content"]/form/fieldset/div[10]/div'),
+            "locator": ("XPATH", '//*[@id="content"]/form/fieldset/div[10]/div'),
             "class": DefaultAddress,
         },
     }
