@@ -20,7 +20,7 @@ class LoginForm(Form):
         "personal": {
             "locator": ("XPATH", '//*[@id="content"]/div/div[2]/div/form'),
             "class": ReturningCustomer,
-        },
+        }
     }
 
     def fill_out(self, **kwargs):

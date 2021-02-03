@@ -30,6 +30,10 @@ max-line-length=100
 # Maximum number of arguments for function / method
 max-args=5
 
+[SIMILARITIES]
+ # Minimum lines number of a similarity.
+min-similarity-lines=6
+
 # Argument names that match this expression will be ignored. Default to name
 # with leading underscore
 ignored-argument-names=_.*
@@ -57,3 +61,4 @@ min-public-methods=1
 
 # Maximum number of public methods for a class (see R0904).
 max-public-methods=7
+
