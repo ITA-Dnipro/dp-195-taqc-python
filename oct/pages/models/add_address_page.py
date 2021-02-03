@@ -4,14 +4,8 @@ from pages.base.elements import RadioButton, Form, InputField, RadioButtonGroup,
 
 class DefaultAddress(RadioButtonGroup):
     contains = {
-        "yes": {
-            "locator": ("XPATH", "/label[1]/input"),
-            "class": RadioButton,
-        },
-        "no": {
-            "locator": ("XPATH", "/label[2]/input"),
-            "class": RadioButton,
-        },
+        "yes": {"locator": ("XPATH", "/label[1]/input"), "class": RadioButton},
+        "no": {"locator": ("XPATH", "/label[2]/input"), "class": RadioButton},
     }
 
 
@@ -48,6 +42,4 @@ class AddAddressForm(Form):
 class AddAddressPage(BasePage):
     url = "index.php?route=account/address/add"
 
-    contains = {
-        "form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": AddAddressForm},
-    }
+    contains = {"form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": AddAddressForm}}
