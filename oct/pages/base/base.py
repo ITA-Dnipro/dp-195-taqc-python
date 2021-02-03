@@ -161,7 +161,6 @@ class Page(Base):
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
-
     def close(self) -> None:
         """Close Page."""
 

@@ -102,7 +102,6 @@ class Link(Element):
 
 
 class DropDown(Element):
-
     def select(self, name):
         """Click it"""
         self._base.find_element_by_xpath(f'//*[@id="input-zone"]/option[text()="{name}"]').click()
