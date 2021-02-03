@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-from pages.drivers import driver
+from oct.pages.drivers import driver
 
 
 def timeout(timesec: int):

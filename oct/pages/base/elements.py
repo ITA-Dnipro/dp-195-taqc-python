@@ -3,7 +3,7 @@
 
 from selenium.common.exceptions import NoSuchElementException
 
-from .base import Element
+from oct.pages.base.base import Element
 
 
 class InputField(Element):

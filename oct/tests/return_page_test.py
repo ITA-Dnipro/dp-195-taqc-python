@@ -2,8 +2,8 @@
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 from pyats.aetest import Testcase, test, setup, cleanup
 
-from pages import ReturnPage, Success
-from . import test_run
+from oct.pages import ReturnPage, Success
+from oct.tests import test_run
 
 
 class LoggedInValid(Testcase):
