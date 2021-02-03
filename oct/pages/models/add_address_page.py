@@ -5,11 +5,11 @@ from pages.base.elements import RadioButton, Form, InputField, RadioButtonGroup,
 class DefaultAddress(RadioButtonGroup):
     contains = {
         "yes": {
-            "locator": ("XPATH", 'div/label[1]/input'),
+            "locator": ("XPATH", "div/label[1]/input"),
             "class": RadioButton,
         },
         "no": {
-            "locator": ("XPATH", '/div/label[2]/input'),
+            "locator": ("XPATH", "/div/label[2]/input"),
             "class": RadioButton,
         },
     }
