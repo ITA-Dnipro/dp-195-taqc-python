@@ -1,9 +1,6 @@
 name: action-file
 
-on:
-  push:
-    branches:
-      - dev
+on: pull_request
 
 jobs:
   build:

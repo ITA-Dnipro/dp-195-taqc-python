@@ -3,8 +3,7 @@
 
 from pyats.aetest import Testcase, test, setup, cleanup
 
-from oct.pages.models.product_page import ProductPage
-from oct.pages.models.shopping_cart_page import ShoppingCartPage
+from oct.pages import ProductPage, ShoppingCartPage
 from oct.tests import test_run
 
 
