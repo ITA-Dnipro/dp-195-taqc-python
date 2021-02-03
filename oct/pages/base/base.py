@@ -152,7 +152,7 @@ class Page(Base):
         self._setup()
 
     def add_logged_in_cookie_session(self, host: str, email: str, password: str) -> None:
-        """Add logged in cookie session"""
+        """Add logged in cookie session."""
 
         data = {"email": email, "password": password}
         url = f"https://{host}/index.php?route=account/login"
@@ -160,7 +160,6 @@ class Page(Base):
         session = Session()
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
-
 
     def close(self) -> None:
         """Close Page."""
