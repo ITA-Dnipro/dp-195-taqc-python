@@ -1,5 +1,6 @@
 from oct.pages.base.elements import Form, InputField, Clickable, Block
 from oct.pages.base.page import BasePage
+from oct.pages import Success
 
 
 class InfoTableRow(Block):
@@ -7,6 +8,14 @@ class InfoTableRow(Block):
         "name": {"locator": ("CSS_SELECTOR", "td:first-child > strong"), "class": Block},
         "value": {"locator": ("CSS_SELECTOR", "td:last-child"), "class": Block},
     }
+
+    @property
+    def name_text(self):
+        return self.name.text.strip(":")
+
+    @property
+    def value_text(self):
+        return float(self.value.text.strip("$").replace(",", ""))
 
 
 class InfoTable(Block):
@@ -74,5 +83,24 @@ class ShoppingCartPage(BasePage):
     }
 
     @property
+    def sub_total(self) -> float:
+        return self.info_table_results["Sub-Total"]
+
+    def discount(self, gift_certificate) -> float:
+        return self.info_table_results[f"Gift Certificate ({gift_certificate})"]
+
+    @property
+    def total(self) -> float:
+        return self.info_table_results["Total"]
+
+    def apply_gift_certificate(self, gift_certificate):
+        self.use_gift_certificate_dropdown.click()
+        self.certificate_form.is_displayed
+        self.certificate_form.fill_out(gift_certificate=gift_certificate)
+        self.certificate_form.send()
+        Success.is_available
+        self._setup()
+
+    @property
     def info_table_results(self) -> dict:
-        return {row.name.text: row.value.text for row in self.info_table.rows}
+        return {row.name_text: row.value_text for row in self.info_table.rows}

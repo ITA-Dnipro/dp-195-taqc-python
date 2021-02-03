@@ -113,6 +113,4 @@ class ReturnPage(BasePage):
 
     url = "index.php?route=account/return/add"
 
-    contains = {
-        "form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": ReturnForm},
-    }
+    contains = {"form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": ReturnForm}}

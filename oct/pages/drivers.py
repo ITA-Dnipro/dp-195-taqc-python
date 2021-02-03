@@ -48,4 +48,4 @@ def get_driver(browser: Enum = Browser.CHROME) -> Remote:
     return output
 
 
-driver = get_driver()
+DRIVER = get_driver()

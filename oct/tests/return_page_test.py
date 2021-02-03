@@ -1,5 +1,7 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
+# pylint:disable=duplicate-code
+
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from oct.pages import ReturnPage, Success
