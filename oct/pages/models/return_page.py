@@ -1,5 +1,5 @@
-from pages.base.page import BasePage
-from pages.base.elements import RadioButton, RadioButtonGroup, Form, Block, InputField
+from oct.pages.base.page import BasePage
+from oct.pages.base.elements import RadioButton, RadioButtonGroup, Form, Block, InputField
 
 
 class Reason(RadioButtonGroup):
@@ -113,6 +113,4 @@ class ReturnPage(BasePage):
 
     url = "index.php?route=account/return/add"
 
-    contains = {
-        "form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": ReturnForm},
-    }
+    contains = {"form": {"locator": ("CLASS_NAME", "form-horizontal"), "class": ReturnForm}}

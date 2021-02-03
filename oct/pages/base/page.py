@@ -2,8 +2,8 @@
 
 from selenium.webdriver.common.by import By
 
-from .base import Page
-from .elements import Block, Clickable, InputField
+from oct.pages.base.base import Page
+from oct.pages.base.elements import Block, Clickable, InputField
 
 
 class AccountDropDown(Clickable):

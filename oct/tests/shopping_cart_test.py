@@ -17,7 +17,7 @@ class ShoppingCartTest(Testcase):
         self.page.cart.add()
 
     @test
-    def test_submit(self, host, gift_certificate="qwerty") -> None:
+    def test_submit(self, host, gift_certificate="100dollars") -> None:
         self.page = ShoppingCartPage()
         self.page.load(host)
         self.page.apply_gift_certificate(gift_certificate)

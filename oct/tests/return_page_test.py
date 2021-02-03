@@ -1,9 +1,11 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
+# pylint:disable=duplicate-code
+
 from pyats.aetest import Testcase, test, setup, cleanup
 
-from pages import ReturnPage, Success
-from . import test_run
+from oct.pages import ReturnPage, Success
+from oct.tests import test_run
 
 
 class LoggedInValid(Testcase):
