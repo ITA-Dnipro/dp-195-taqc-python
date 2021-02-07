@@ -1,7 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException
 
-from pages.base.page import BasePage
-from pages.base.elements import Clickable, Block, Link, ProductThumb
+from oct.pages.base.page import BasePage
+from oct.pages.base.elements import Clickable, Block, Link, ProductThumb
 
 
 class DropDownSelector(Clickable):

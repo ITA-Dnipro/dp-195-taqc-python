@@ -4,32 +4,32 @@
 
 from pyats.aetest import Testcase, test, setup, cleanup
 
-from oct.pages import ReturnPage, Success
-from oct.tests import test_run
+from oct.pages import ReturnPage
+from oct.tests import test_run, from_file
 
 
-class LoggedInValid(Testcase):
+class EmailValidationTest(Testcase):
+
+    parameters = {"warning_message": "E-Mail Address does not appear to be valid!"}
+
     @setup
-    def open(self, host: str) -> None:
+    def create(self, host: str) -> None:
         self.page = ReturnPage()
-        self.page.load(host)
+        self.host = host
 
-    @test
-    def test_submit(self) -> None:
-        self.page.form.fill_out(
-            first_name="John",
-            last_name="Doe",
-            email="kek@gmail.com",
-            telephone="2212211",
-            order_id="5",
-            product_name="iphone",
-            product_code="i5",
-            reason="wrong",
-            is_opened="yes",
-            details="asdsdsadasdsddwwscscew",
-        )
+    @test.loop(testdata=from_file("testdata/valid_email.json"))
+    def test_valid_data(self, testdata) -> None:
+        self.page.load(self.host)
+        self.page.form.fill_out(email=testdata)
         self.page.form.submit()
-        assert Success().is_available
+        assert self.parameters["warning_message"] not in self.page.get_alerts()
+
+    @test.loop(testdata=from_file("testdata/invalid_email.json"))
+    def test_invalid_data(self, testdata) -> None:
+        self.page.load(self.host)
+        self.page.form.fill_out(email=testdata)
+        self.page.form.submit()
+        assert self.parameters["warning_message"] in self.page.get_alerts()
 
     @cleanup
     def close(self) -> None:
