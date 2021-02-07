@@ -22,18 +22,9 @@ class SortBy(DropDownSelector):
         "default": {"locator": ("XPATH", '//*[@id="input-sort"]/option[1]'), "class": Link},
         "name_a_z": {"locator": ("XPATH", '//*[@id="input-sort"]/option[2]'), "class": Link},
         "name_z_a": {"locator": ("XPATH", '//*[@id="input-sort"]/option[3]'), "class": Link},
-        "price_low_high": {
-            "locator": ("XPATH", '//*[@id="input-sort"]/option[4]'),
-            "class": Link,
-        },
-        "price_high_low": {
-            "locator": ("XPATH", '//*[@id="input-sort"]/option[5]'),
-            "class": Link,
-        },
-        "rating_high": {
-            "locator": ("XPATH", '//*[@id="input-sort"]/option[6]'),
-            "class": Link,
-        },
+        "price_low_high": {"locator": ("XPATH", '//*[@id="input-sort"]/option[4]'), "class": Link},
+        "price_high_low": {"locator": ("XPATH", '//*[@id="input-sort"]/option[5]'), "class": Link},
+        "rating_high": {"locator": ("XPATH", '//*[@id="input-sort"]/option[6]'), "class": Link},
         "rating_low": {"locator": ("XPATH", '//*[@id="input-sort"]/option[7]'), "class": Link},
         "model_a_z": {"locator": ("XPATH", '//*[@id="input-sort"]/option[8]'), "class": Link},
         "model_z_a": {"locator": ("XPATH", '//*[@id="input-sort"]/option[9]'), "class": Link},

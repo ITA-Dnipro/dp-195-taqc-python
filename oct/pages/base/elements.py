@@ -1,6 +1,5 @@
 """Module contains basic webelements of the page object."""
 
-
 from selenium.common.exceptions import NoSuchElementException
 
 from oct.pages.base.base import Element
@@ -100,3 +99,9 @@ class Link(Element):
         if link is None:
             link = self._base.get_attribute("value")
         return link
+
+
+class DropDown(Element):
+    def select(self, name):
+        """Click it."""
+        self._base.find_element_by_xpath(f'/option[text()="{name}"]').click()

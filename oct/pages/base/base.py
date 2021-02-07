@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-from oct.pages.drivers import driver
+from oct.pages.drivers import DRIVER
 
 
 def timeout(timesec: int):
@@ -119,7 +119,7 @@ class Base(ABC):
 class Page(Base):
     """Basic page class."""
 
-    def __init__(self, base: WebDriver = driver):
+    def __init__(self, base: WebDriver = DRIVER):
         super().__init__(base)
 
     url = ""
@@ -170,7 +170,7 @@ class Page(Base):
 class Success(Base):
     """Success page class, do not inherit."""
 
-    def __init__(self, base: WebDriver = driver):
+    def __init__(self, base: WebDriver = DRIVER):
         super().__init__(base)
 
     url = "success"
