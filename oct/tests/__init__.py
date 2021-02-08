@@ -1,5 +1,5 @@
-import json
 import os
+import json
 from pyats import aetest
 
 
@@ -8,7 +8,7 @@ def from_file(filename: str):
     with open(filename, "r") as data:
         return json.loads(data.read())
 
-      
+
 def test_run(
     host: str = "127.0.0.1",
     email=os.environ.get("CUSTOMER_EMAIL"),
