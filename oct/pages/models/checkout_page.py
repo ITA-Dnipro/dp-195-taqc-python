@@ -4,7 +4,8 @@ from pages.base.elements import (
     InputField,
     Clickable,
     CheckBox,
-    Dropdown, RadioButtonGroup
+    Dropdown,
+    Form,
 )
 from oct.pages.base.page import BasePage
 
@@ -44,14 +45,14 @@ class ReturningCustomer(Block):
 class BillingDetails(Form):
     contains = {
         "first_name": {"locator": ("ID", "input-payment-firstname"), "class": InputField},
-        "last_name": {"locator": ("ID", "input-payment-lastname"),"class": InputField},
-        "email": {"locator": ("ID", "input-payment-email"),"class": InputField},
-        "telephone": {"locator": ("ID", "input-payment-telephone"),"class": InputField},
-        "company": {"locator": ("ID", "input-payment-company"),"class": InputField},
-        "address_1": {"locator": ("ID", "input-payment-address-1"),"class": InputField},
-        "address_2": {"locator": ("ID", "input-payment-address-2"),"class": InputField},
-        "city": {"locator": ("ID", "input-payment-city"),"class": InputField},
-        "post_code": {"locator": ("ID", "input-payment-postcode"),"class": InputField},
+        "last_name": {"locator": ("ID", "input-payment-lastname"), "class": InputField},
+        "email": {"locator": ("ID", "input-payment-email"), "class": InputField},
+        "telephone": {"locator": ("ID", "input-payment-telephone"), "class": InputField},
+        "company": {"locator": ("ID", "input-payment-company"), "class": InputField},
+        "address_1": {"locator": ("ID", "input-payment-address-1"), "class": InputField},
+        "address_2": {"locator": ("ID", "input-payment-address-2"), "class": InputField},
+        "city": {"locator": ("ID", "input-payment-city"), "class": InputField},
+        "post_code": {"locator": ("ID", "input-payment-postcode"), "class": InputField},
         "country": {"locator": ("ID", "input-payment-country"), "class": Dropdown},
         "region_state": {"locator": ("ID", "input-payment-zone"), "class": Dropdown},
         "my_delivery_and_billing_addresses": {
@@ -60,6 +61,7 @@ class BillingDetails(Form):
         },
         "continue_button": {"locator": ("ID", "button-guest"), "class": Clickable},
     }
+
     def fill_out(self, **kwargs):
         self.first_name.fill(kwargs.get("first_name"))
         self.last_name.fill(kwargs.get("last_name"))
@@ -85,8 +87,9 @@ class DeliveryDetails(Block):
         "post_code": {"locator": ("ID", "input-shipping-postcode"), "class": InputField},
         "country": {"locator": ("ID", "input-shipping-country"), "class": Dropdown},
         "region_state": {"locator": ("ID", "input-shipping-zone"), "class": Dropdown},
-        "continue_button": {"locator": ("ID", "button-guest-shipping"),"class": Clickable},
+        "continue_button": {"locator": ("ID", "button-guest-shipping"), "class": Clickable},
     }
+
     def fill_out(self, **kwargs):
         self.first_name.fill(kwargs.get("first_name"))
         self.last_name.fill(kwargs.get("last_name"))
@@ -98,6 +101,7 @@ class DeliveryDetails(Block):
         self.country.select(kwargs.get("country"))
         self.region_state.select(kwargs.get("region_state"))
 
+
 class DeliveryMethod(Block):
     contains = {
         "flat_shipping_rate": {
@@ -108,7 +112,7 @@ class DeliveryMethod(Block):
             "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div/p[4]/textarea"),
             "class": InputField,
         },
-        "continue_button": {"locator": ("ID", "button-shipping-method"),"class": Clickable},
+        "continue_button": {"locator": ("ID", "button-shipping-method"), "class": Clickable},
     }
 
 
