@@ -4,11 +4,12 @@ from pages.base.elements import (
     InputField,
     Clickable,
     CheckBox,
-    Dropdown
+    Dropdown, RadioButtonGroup
 )
+from oct.pages.base.page import BasePage
 
 
-class NewCustomer(Block):
+class CheckoutOptions(Block):
     contains = {
         "register_account": {
             "locator": (
@@ -24,7 +25,7 @@ class NewCustomer(Block):
             ),
             "class": RadioButton,
         },
-        "continue_button": {"locator": ("XPATH", "//*[@id='button-account']"), "class": Clickable},
+        "continue_button": {"locator": ("ID", "button-account"), "class": Clickable},
     }
 
 
@@ -40,98 +41,82 @@ class ReturningCustomer(Block):
         self.test.password.fill(kwargs.get("password"))
 
 
-class BillingDetails(Block):
+class BillingDetails(Form):
     contains = {
-        "first_name": {
-            "locator": ("XPATH", "//*[@id='input-payment-firstname']"),
-            "class": InputField,
-        },
-        "last_name": {
-            "locator": ("XPATH", "//*[@id='input-payment-lastname']"),
-            "class": InputField,
-        },
-        "email": {"locator": ("XPATH", "//*[@id='input-payment-email']"), "class": InputField},
-        "telephone": {
-            "locator": ("XPATH", "//*[@id='input-payment-telephone']"),
-            "class": InputField,
-        },
-        "company": {"locator": ("XPATH", "//*[@id='input-payment-company']"), "class": InputField},
-        "address_1": {
-            "locator": ("XPATH", "//*[@id='input-payment-address-1']"),
-            "class": InputField,
-        },
-        "address_2": {
-            "locator": ("XPATH", "//*[@id='input-payment-address-2']"),
-            "class": InputField,
-        },
-        "city": {"locator": ("XPATH", "//*[@id='input-payment-city']"), "class": InputField},
-        "post_code": {
-            "locator": ("XPATH", "//*[@id='input-payment-postcode']"),
-            "class": InputField,
-        },
-        "country": {"locator": ("XPATH", "//*[@id='input-payment-country']"), "class": Dropdown},
-        "region_state": {"locator": ("XPATH", "//*[@id='input-payment-zone']"), "class": Dropdown},
+        "first_name": {"locator": ("ID", "input-payment-firstname"), "class": InputField},
+        "last_name": {"locator": ("ID", "input-payment-lastname"),"class": InputField},
+        "email": {"locator": ("ID", "input-payment-email"),"class": InputField},
+        "telephone": {"locator": ("ID", "input-payment-telephone"),"class": InputField},
+        "company": {"locator": ("ID", "input-payment-company"),"class": InputField},
+        "address_1": {"locator": ("ID", "input-payment-address-1"),"class": InputField},
+        "address_2": {"locator": ("ID", "input-payment-address-2"),"class": InputField},
+        "city": {"locator": ("ID", "input-payment-city"),"class": InputField},
+        "post_code": {"locator": ("ID", "input-payment-postcode"),"class": InputField},
+        "country": {"locator": ("ID", "input-payment-country"), "class": Dropdown},
+        "region_state": {"locator": ("ID", "input-payment-zone"), "class": Dropdown},
         "my_delivery_and_billing_addresses": {
             "locator": ("XPATH", "//*[@id='collapse-payment-address']/div/div[2]/label/input"),
             "class": CheckBox,
         },
-        "continue_button": {"locator": ("XPATH", "//*[@id='button-guest']"), "class": Clickable},
+        "continue_button": {"locator": ("ID", "button-guest"), "class": Clickable},
     }
+    def fill_out(self, **kwargs):
+        self.first_name.fill(kwargs.get("first_name"))
+        self.last_name.fill(kwargs.get("last_name"))
+        self.email.fill(kwargs.get("email"))
+        self.telephone.fill(kwargs.get("telephone"))
+        self.company.fill(kwargs.get("company"))
+        self.address_1.fill(kwargs.get("address_1"))
+        self.address_2.fill(kwargs.get("address_2"))
+        self.city.fill(kwargs.get("city"))
+        self.post_code.fill(kwargs.get("post_code"))
+        self.country.select(kwargs.get("country"))
+        self.region_state.select(kwargs.get("region_state"))
 
 
 class DeliveryDetails(Block):
     contains = {
-        "first_name": {
-            "locator": ("XPATH", "//*[@id='input-shipping-firstname']"),
-            "class": InputField,
-        },
-        "last_name": {
-            "locator": ("XPATH", "//*[@id='input-shipping-lastname']"),
-            "class": InputField,
-        },
-        "company": {"locator": ("XPATH", "//*[@id='input-shipping-company']"), "class": InputField},
-        "address_1": {
-            "locator": ("XPATH", "//*[@id='input-shipping-address-1']"),
-            "class": InputField,
-        },
-        "address_2": {
-            "locator": ("XPATH", "//*[@id='input-shipping-address-2']"),
-            "class": InputField,
-        },
-        "city": {"locator": ("XPATH", "//*[@id='input-shipping-city']"), "class": InputField},
-        "post_code": {
-            "locator": ("XPATH", "//*[@id='input-shipping-postcode']"),
-            "class": InputField,
-        },
-        "country": {"locator": ("XPATH", "//*[@id='input-shipping-country']"), "class": Dropdown},
-        "region_state": {"locator": ("XPATH", "//*[@id='input-shipping-zone']"), "class": Dropdown},
-        "continue_button": {
-            "locator": ("XPATH", "//*[@id='button-guest-shipping']"),
-            "class": Clickable,
-        },
+        "first_name": {"locator": ("ID", "input-shipping-firstname"), "class": InputField},
+        "last_name": {"locator": ("ID", "input-shipping-lastname"), "class": InputField},
+        "company": {"locator": ("ID", "input-shipping-company"), "class": InputField},
+        "address_1": {"locator": ("ID", "input-shipping-address-1"), "class": InputField},
+        "address_2": {"locator": ("ID", "input-shipping-address-2"), "class": InputField},
+        "city": {"locator": ("ID", "input-shipping-city"), "class": InputField},
+        "post_code": {"locator": ("ID", "input-shipping-postcode"), "class": InputField},
+        "country": {"locator": ("ID", "input-shipping-country"), "class": Dropdown},
+        "region_state": {"locator": ("ID", "input-shipping-zone"), "class": Dropdown},
+        "continue_button": {"locator": ("ID", "button-guest-shipping"),"class": Clickable},
     }
-
+    def fill_out(self, **kwargs):
+        self.first_name.fill(kwargs.get("first_name"))
+        self.last_name.fill(kwargs.get("last_name"))
+        self.company.fill(kwargs.get("company"))
+        self.address_1.fill(kwargs.get("address_1"))
+        self.address_2.fill(kwargs.get("address_2"))
+        self.city.fill(kwargs.get("city"))
+        self.post_code.fill(kwargs.get("post_code"))
+        self.country.select(kwargs.get("country"))
+        self.region_state.select(kwargs.get("region_state"))
 
 class DeliveryMethod(Block):
     contains = {
         "flat_shipping_rate": {
-            "locator": ("XPATH", "//*[@ id='collapse-shipping-method']/div/div[1]/label/input")
+            "locator": ("XPATH", "//*[@ id='collapse-shipping-method']/div/div[1]/label/input"),
+            "class": RadioButton,
         },
         "add_comments": {
             "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div/p[4]/textarea"),
             "class": InputField,
         },
-        "continue_button": {
-            "locator": ("XPATH", "//*[@id='button-shipping-method']"),
-            "class": Clickable,
-        },
+        "continue_button": {"locator": ("ID", "button-shipping-method"),"class": Clickable},
     }
 
 
 class PaymentMethod(Block):
     contains = {
         "cash_on_delivery": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[1]/label/input")
+            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[1]/label/input"),
+            "class": RadioButton,
         },
         "add_comments": {
             "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/p[3]/textarea"),
@@ -141,17 +126,14 @@ class PaymentMethod(Block):
             "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[2]/div/input[1]"),
             "class": CheckBox,
         },
-        "continue_button": {
-            "locator": ("XPATH", "//*[@id='button-payment-method']"),
-            "class": Clickable,
-        },
+        "continue_button": {"locator": ("ID", "button-payment-method"), "class": Clickable},
     }
 
 
-class ConfirmOrder(Block):
-    contains = {
-        "confirm_order_button": {
-            "locator": ("XPATH", "//*[@id='button-confirm']"),
-            "class": Clickable,
-        }
-    }
+class ConfirmOrderButton(Clickable):
+    contains = {"confirm_order_button": {"locator": ("ID", "button-confirm")}}
+
+
+class CheckoutPage(BasePage):
+
+    url = "index.php?route=checkout/checkout"
