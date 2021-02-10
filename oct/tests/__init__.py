@@ -1,6 +1,8 @@
 import json
-from settings import host, email, customer_password
+
 from pyats import aetest
+
+from settings import host, email, customer_password
 
 
 def from_file(filename: str):
