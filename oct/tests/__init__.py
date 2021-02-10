@@ -8,6 +8,6 @@ def from_file(filename: str):
     with open(filename, "r") as data:
         return json.loads(data.read())
 
-      
+
 def test_run() -> None:
     aetest.main(host=host, email=email, password=customer_password)
