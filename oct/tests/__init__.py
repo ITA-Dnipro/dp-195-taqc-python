@@ -1,5 +1,5 @@
 import json
-import os
+from settings import host, email, customer_password
 from pyats import aetest
 
 
@@ -9,9 +9,5 @@ def from_file(filename: str):
         return json.loads(data.read())
 
       
-def test_run(
-    host: str = "127.0.0.1",
-    email=os.environ.get("CUSTOMER_EMAIL"),
-    password=os.environ.get("CUSTOMER_PASSWORD"),
-) -> None:
-    aetest.main(host=host, email=email, password=password)
+def test_run() -> None:
+    aetest.main(host=host, email=email, password=customer_password)
