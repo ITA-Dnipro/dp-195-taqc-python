@@ -79,7 +79,18 @@ class ProductThumb(Element):
     """Product thumb block."""
 
     contains = {
-        "caption": {"locator": ("CLASS_NAME", "caption"), "class": Element},
+        "title": {
+            "locator": ("CSS_SELECTOR", "div:nth-child(2) > div.caption > h4"),
+            "class": Element,
+        },
+        "description": {
+            "locator": ("CSS_SELECTOR", "div:nth-child(2) > div.caption > p:nth-child(2)"),
+            "class": Element,
+        },
+        "price": {
+            "locator": ("CSS_SELECTOR", "div:nth-child(2) > div.caption > p.price"),
+            "class": Element,
+        },
         "link": {"locator": ("TAG_NAME", "a"), "class": Clickable},
         "cart": {"locator": ("CLASS_NAME", "fa-shopping-cart"), "class": Clickable},
         "wish": {"locator": ("CLASS_NAME", "fa-heart"), "class": Clickable},
@@ -104,4 +115,57 @@ class Link(Element):
 class DropDown(Element):
     def select(self, name):
         """Click it."""
-        self._base.find_element_by_xpath(f'/option[text()="{name}"]').click()
+        self._base.find_element_by_xpath(f'//option[text()="{name}"]').click()
+
+    def get_value(self, name) -> str:
+        option = self._base.find_element_by_xpath(f'//option[text()="{name}"]')
+        return option.get_attribute("value")
+
+
+class Paginator(Block):
+    """Pagination bar."""
+
+    contains = {"tabs": {"locator": ("TAG_NAME", "li"), "class": Link, "is_loaded": True}}
+
+    @property
+    def number_of_pages(self) -> int:
+        pages = 1
+        if len(self.tabs) != 0:
+            digits = map(lambda x: int(x.text), filter(lambda y: y.text.isdigit(), self.tabs))
+            pages = max(digits)
+
+        return pages
+
+    @property
+    def current_page_num(self) -> int:
+        active = None
+        if self.number_of_pages != 1:
+            page = list(
+                filter(
+                    lambda x: x._base.get_attribute("class") == "active",  # pylint: disable=W0212
+                    self.tabs,
+                )
+            )
+            active = int(page[0].text)
+
+        else:
+            active = 1
+        return active
+
+    @property
+    def next_page_num(self) -> int:
+        nexp = None
+        if self.number_of_pages - self.current_page_num > 0:
+            nexp = self.current_page_num + 1
+        else:
+            nexp = self.current_page_num
+        return nexp
+
+    @property
+    def prev_page_num(self) -> int:
+        prep = None
+        if self.current_page_num != 1:
+            prep = self.current_page_num - 1
+        else:
+            prep = self.current_page_num
+        return prep

@@ -4,17 +4,21 @@ from oct.pages.base.elements import CheckBox, RadioButton, RadioButtonGroup, For
 
 class NewsLetter(RadioButtonGroup):
     contains = {
-        "yes": {"locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]/div/div/label[1]/input'),
-                "class": RadioButton},
-        "no": {"locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]/div/div/label[2]/input'),
-               "class": RadioButton}
+        "yes": {
+            "locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]/div/div/label[1]/input'),
+            "class": RadioButton,
+        },
+        "no": {
+            "locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]/div/div/label[2]/input'),
+            "class": RadioButton,
+        },
     }
 
 
 class YourPassword(Block):
     contains = {
         "password": {"locator": ("ID", "input-password"), "class": InputField},
-        "confirm": {"locator": ("ID", "input-confirm"), "class": InputField}
+        "confirm": {"locator": ("ID", "input-confirm"), "class": InputField},
     }
 
 
@@ -23,16 +27,25 @@ class PersonalDetails(Block):
         "first_name": {"locator": ("ID", "input-firstname"), "class": InputField},
         "last_name": {"locator": ("ID", "input-lastname"), "class": InputField},
         "email": {"locator": ("ID", "input-email"), "class": InputField},
-        "telephone": {"locator": ("ID", "input-telephone"), "class": InputField}
+        "telephone": {"locator": ("ID", "input-telephone"), "class": InputField},
     }
 
 
 class RegistrationForm(Form):
     contains = {
         "personal": {"locator": ("XPATH", '//*[@id="account"]'), "class": PersonalDetails},
-        "password": {"locator": ("XPATH", '//*[@id="content"]/form/fieldset[2]'), "class": YourPassword},
-        "newsletter": {"locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]'), "class": NewsLetter},
-        'policy': {"locator": ("XPATH", '//*[@id="content"]/form/div/div/input[1]'), "class": CheckBox}
+        "password": {
+            "locator": ("XPATH", '//*[@id="content"]/form/fieldset[2]'),
+            "class": YourPassword,
+        },
+        "newsletter": {
+            "locator": ("XPATH", '//*[@id="content"]/form/fieldset[3]'),
+            "class": NewsLetter,
+        },
+        "policy": {
+            "locator": ("XPATH", '//*[@id="content"]/form/div/div/input[1]'),
+            "class": CheckBox,
+        },
     }
 
     def fill_out(self, **kwargs):
