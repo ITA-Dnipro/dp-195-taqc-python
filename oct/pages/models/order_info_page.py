@@ -66,8 +66,8 @@ class OrderInfoPage(BasePage):
 
     url = "index.php?route=account/order/info&order_id="
 
-    def __init__(self, order_id: int, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, order_id: int):
+        super().__init__()
         self.url = f"{self.url}{order_id}"
 
     contains = {
