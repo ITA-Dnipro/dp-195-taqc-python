@@ -187,13 +187,3 @@ class SearchPage(BasePage):
             "overall_products": match[2],
             "pages": match[3],
         }
-
-
-if __name__ == "__main__":
-
-    from oct.pages.drivers import DRIVER
-
-    host = "127.0.0.1"
-
-    page = SearchPage(DRIVER)
-    page.load(host)
