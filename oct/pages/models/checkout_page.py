@@ -5,12 +5,12 @@ from pages.base.elements import (
     Clickable,
     CheckBox,
     Dropdown,
-    Form,
+    RadioButtonGroup
 )
 from oct.pages.base.page import BasePage
 
 
-class CheckoutOptions(Block):
+class CheckoutOptions(RadioButtonGroup):
     contains = {
         "register_account": {
             "locator": (
@@ -25,9 +25,12 @@ class CheckoutOptions(Block):
                 '//*[@id="collapse-checkout-option"]/div/div/div[1]/div[2]/label/input',
             ),
             "class": RadioButton,
-        },
-        "continue_button": {"locator": ("ID", "button-account"), "class": Clickable},
+        }
     }
+
+
+class CheckoutContinueButton(Clickable):
+    contains = {"continue_button": {"locator": ("ID", "button-account"), "class": Clickable}}
 
 
 class ReturningCustomer(Block):
@@ -38,11 +41,12 @@ class ReturningCustomer(Block):
     }
 
     def fill_out(self, **kwargs):
-        self.test.email.fill(kwargs.get("email"))
-        self.test.password.fill(kwargs.get("password"))
+        self.email.fill(kwargs.get("email"))
+        self.password.fill(kwargs.get("password"))
+        self.login_button.click()
 
 
-class BillingDetails(Form):
+class BillingDetails(Block):
     contains = {
         "first_name": {"locator": ("ID", "input-payment-firstname"), "class": InputField},
         "last_name": {"locator": ("ID", "input-payment-lastname"), "class": InputField},
@@ -74,6 +78,7 @@ class BillingDetails(Form):
         self.post_code.fill(kwargs.get("post_code"))
         self.country.select(kwargs.get("country"))
         self.region_state.select(kwargs.get("region_state"))
+        self.continue_button.click()
 
 
 class DeliveryDetails(Block):
