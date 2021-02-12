@@ -5,7 +5,7 @@ from pages.base.elements import (
     Clickable,
     CheckBox,
     Dropdown,
-    RadioButtonGroup
+    RadioButtonGroup,
 )
 from oct.pages.base.page import BasePage
 
@@ -25,7 +25,7 @@ class CheckoutOptions(RadioButtonGroup):
                 '//*[@id="collapse-checkout-option"]/div/div/div[1]/div[2]/label/input',
             ),
             "class": RadioButton,
-        }
+        },
     }
 
 
