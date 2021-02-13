@@ -5,7 +5,7 @@
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from oct.pages import ReturnPage
-from oct.tests import test_run, from_file
+from oct.tests import test_run
 
 
 class EmailValidationTest(Testcase):
