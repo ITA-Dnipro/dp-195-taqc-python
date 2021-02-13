@@ -30,4 +30,4 @@ class ShoppingCartTest(Testcase):
 
 
 if __name__ == "__main__":
-    test_run(datafile=None)
+    test_run(data_file=None)
