@@ -9,8 +9,5 @@ def test_run(data_file) -> None:
     device = testbed.devices["opencart-testing-vm"]
     device.connect()
     aetest.main(
-        datafile=data_file,
-        host=device.connections.main.ip,
-        email=email,
-        password=customer_password
+        datafile=data_file, host=device.connections.main.ip, email=email, password=customer_password
     )
