@@ -1,6 +1,6 @@
 from oct.pages.base.elements import Form, InputField, Clickable, Block
 from oct.pages.base.page import BasePage
-from oct.pages import Success
+# from oct.pages import Success
 
 
 class InfoTableRow(Block):
@@ -98,7 +98,7 @@ class ShoppingCartPage(BasePage):
         self.certificate_form.is_displayed
         self.certificate_form.fill_out(gift_certificate=gift_certificate)
         self.certificate_form.send()
-        Success.is_available
+        # Success.is_available
         self._setup()
 
     @property
