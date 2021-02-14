@@ -1,0 +1,16 @@
+testbed:
+    name: sampleTestbed
+    alias: topologySampleTestbed
+devices:
+    opencart-testing-vm:
+        os: 'linux'
+        connections:
+            defaults:
+                via: main
+                alias: default
+            main:
+                username: testuser
+                protocol: ssh
+                ip: "34.107.116.227"
+                password: "%ENC{gAAAAABgJvET22OeCr8nWe_dsj18oStvZNJkWruZSQJY-s5LP8SDx96U79q7-G_CArtr3Alfh-AfiRPQ4KeDlnmNV3_N4BpZ9Q==}"
+        type: 'linux'

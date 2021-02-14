@@ -51,6 +51,54 @@ Add oct package to $PYTHONPATH by running following command from inside the pack
 python setup.py develop
 ```
 
+Follow this procedure to make your secret strings cryptographically secure:
+1. Create inside a virtual environment file:
+```bash
+$VIRTUAL_ENV/pyats.conf
+```
+
+2. Update your pyATS configuration file as follows:
+```bash
+[secrets]
+string.representer = pyats.utils.secret_strings.FernetSecretStringRepresenter
+```
+
+3. Install the cryptography package:
+```bash
+pip install cryptography
+```
+
+4. Generate a cryptographic key:
+```bash
+> pyats secret keygen
+Newly generated key :
+dSvoKX23jKQADn20INt3W3B5ogUQmh6Pq00czddHtgU=
+```
+
+5. Update your pyATS configuration file as follows:
+```bash
+[secrets]
+string.representer = pyats.utils.secret_strings.FernetSecretStringRepresenter
+string.key = dSvoKX23jKQADn20INt3W3B5ogUQmh6Pq00czddHtgU=
+```
+
+6. Encode a password:
+```bash
+> pyats secret encode --string MySecretPassword
+Encoded string :
+gAAAAABdsgvwElU9_3RTZsRnd4b1l3Es2gV6Y_DUnUE8C9y3SdZGBc2v0B2m9sKVz80jyeYhlWKMDwtqfwlbg4sQ2Y0a843luOrZyyOuCgZ7bxE5X3Dk_NY=
+```
+
+7. Add your encoded password to a testbed.yaml %ENC{} block:
+```bash
+testbed:
+    name: sampleTestbed
+    credentials:
+        default:
+            username: admin
+            password: "%ENC{gAAAAABdsgvwElU9_3RTZsRnd4b1l3Es2gV6Y_DUnUE8C9y3SdZGBc2v0B2m9sKVz80jyeYhlWKMDwtqfwlbg4sQ2Y0a843luOrZyyOuCgZ7bxE5X3Dk_NY=}"
+```
+
 ### System under test (SUT) installation
 
 #### Docker
