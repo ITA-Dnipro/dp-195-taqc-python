@@ -146,3 +146,38 @@ class ConfirmOrderButton(Clickable):
 class CheckoutPage(BasePage):
 
     url = "index.php?route=checkout/checkout"
+
+    contains = {
+        "checkout_options": {
+            "locator": ("XPATH", "//*[@id='collapse-checkout-option']/div/div/div[1]"),
+            "class": CheckoutOptions,
+        },
+        "checkout_continue_button": {
+            "locator": ("XPATH", "//*[@id='button-account']"),
+            "class": CheckoutContinueButton,
+        },
+        "returning_customer": {
+            "locator": ("XPATH", "//*[@id='collapse-checkout-option']/div/div/div[2]"),
+            "class": ReturningCustomer,
+        },
+        "billing_form": {
+            "locator": ("XPATH", "//*[@id='collapse-payment-address']/div"),
+            "class": BillingDetails,
+        },
+        "delivery_form": {
+            "locator": ("XPATH", "//*[@id='collapse-shipping-address']/div"),
+            "class": DeliveryDetails,
+        },
+        "delivery_method": {
+            "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div"),
+            "class": DeliveryMethod,
+        },
+        "payment_metod": {
+            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div"),
+            "class": PaymentMethod,
+        },
+        "confirm_order": {
+            "locator": ("XPATH", "//*[@id='collapse-checkout-confirm']/div"),
+            "class": ConfirmOrderButton,
+        }
+    }
