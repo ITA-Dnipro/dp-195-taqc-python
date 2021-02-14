@@ -9,7 +9,7 @@ class InputField(Element):
     """Any type of a writable input."""
 
     def fill(self, text: str) -> None:
-        if text not in ['', None]:
+        if text not in ["", None]:
             self._base.clear()
             self._base.send_keys(text)
 
