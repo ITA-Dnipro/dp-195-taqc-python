@@ -1,6 +1,6 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
-from pages import AddAddressPage
+from oct.pages import AddAddressPage
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 from oct.tests import test_run
 
