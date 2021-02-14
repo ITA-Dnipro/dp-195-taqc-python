@@ -5,3 +5,4 @@ from .models.shopping_cart_page import ShoppingCartPage  # noqa
 from .models.product_page import ProductPage  # noqa
 from .models.login_page import LoginPage  # noqa
 from .models.order_history_page import OrderHistoryPage  # noqa
+from .models.order_info_page import OrderInfoPage  # noqa
