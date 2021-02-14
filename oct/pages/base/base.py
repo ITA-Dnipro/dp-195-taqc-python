@@ -167,13 +167,12 @@ class Page(Base):
         self._base.close()
 
 
-class Success(Base):
-    """Success page class, do not inherit."""
+class Accessory(Base):
+    """Accessory page class, do not inherit."""
 
-    def __init__(self, base: WebDriver = DRIVER):
+    def __init__(self, base: WebDriver = DRIVER, url: str = "success"):
         super().__init__(base)
-
-    url = "success"
+        self.url = url
 
     @property
     @timeout(WAIT)

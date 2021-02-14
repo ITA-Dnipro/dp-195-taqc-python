@@ -1,4 +1,4 @@
-from .base.base import Success  # noqa
+from .base.base import Accessory  # noqa
 from .models.return_page import ReturnPage  # noqa
 from .models.category_page import CategoryPage  # noqa
 from .models.shopping_cart_page import ShoppingCartPage  # noqa

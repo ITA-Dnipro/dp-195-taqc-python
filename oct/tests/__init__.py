@@ -5,7 +5,7 @@ from settings import email, customer_password
 
 
 def test_run(data_file) -> None:
-    testbed = loader.load("testbed.yaml")
+    testbed = loader.load("./../testbed.yaml")
     device = testbed.devices["opencart-testing-vm"]
     device.connect()
     aetest.main(
