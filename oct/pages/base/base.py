@@ -141,7 +141,7 @@ class Page(Base):
     def load(self, host: str) -> None:
         """Load page."""
 
-        self._base.get(f"https://{host}/{self.url}")
+        self._base.get(f"http://{host}/{self.url}")
         self._base.maximize_window()
         self._setup()
 

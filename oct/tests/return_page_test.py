@@ -5,7 +5,7 @@
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from oct.pages import ReturnPage
-from oct.tests import test_run, from_file
+from oct.tests import test_run
 
 
 class EmailValidationTest(Testcase):
@@ -17,14 +17,14 @@ class EmailValidationTest(Testcase):
         self.page = ReturnPage()
         self.host = host
 
-    @test.loop(testdata=from_file("testdata/valid_email.json"))
+    @test
     def test_valid_data(self, testdata) -> None:
         self.page.load(self.host)
         self.page.form.fill_out(email=testdata)
         self.page.form.submit()
         assert self.parameters["warning_message"] not in self.page.get_alerts()
 
-    @test.loop(testdata=from_file("testdata/invalid_email.json"))
+    @test
     def test_invalid_data(self, testdata) -> None:
         self.page.load(self.host)
         self.page.form.fill_out(email=testdata)
@@ -37,4 +37,4 @@ class EmailValidationTest(Testcase):
 
 
 if __name__ == "__main__":
-    test_run()
+    test_run(data_file=None)
