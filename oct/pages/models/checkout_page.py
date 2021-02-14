@@ -179,5 +179,5 @@ class CheckoutPage(BasePage):
         "confirm_order": {
             "locator": ("XPATH", "//*[@id='collapse-checkout-confirm']/div"),
             "class": ConfirmOrderButton,
-        }
+        },
     }
