@@ -1,7 +1,7 @@
 from pyats import aetest
 from pyats.topology import loader
 
-from drivers import Browser, get_driver
+from oct.drivers import Browser, get_driver
 from settings import email, customer_password
 
 
