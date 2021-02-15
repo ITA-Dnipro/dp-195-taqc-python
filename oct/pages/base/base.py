@@ -11,8 +11,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-from oct.pages.drivers import DRIVER
-
 
 def timeout(timesec: int):
     """Page loading timeout decorator."""
@@ -41,31 +39,29 @@ class Base(ABC):
         self._base = base
 
     contains: Optional[dict] = None
-    """
-    contains class attribute contains page's webelements. Webelements set
-    is the page specific.
-    Example:
-    contains = {
-        elementName: {
-            "locator": (by, value),
-            "class": Element
-        },
-        ...
-    }
+    # contains class attribute contains page's webelements. Webelements set
+    # is the page specific.
+    # Example:
+    # contains = {
+    #     elementName: {
+    #         "locator": (by, value),
+    #         "class": Element
+    #     },
+    #     ...
+    # }
 
-    For pages with dynamically generated content (Search Page, Category Page)
-    specify loadable webelement (such ProductThumb) by adding "is_loaded"
-    parameter to the element's dict as such:
-    contains = {
-        ...
-        elementName: {
-            "locator": (by, value),
-            "class": ProductThumb,
-            "is_loaded": True
-        },
-        ...
-    }
-    """
+    # For pages with dynamically generated content (Search Page, Category Page)
+    # specify loadable webelement (such ProductThumb) by adding "is_loaded"
+    # parameter to the element's dict as such:
+    # contains = {
+    #     ...
+    #     elementName: {
+    #         "locator": (by, value),
+    #         "class": ProductThumb,
+    #         "is_loaded": True
+    #     },
+    #     ...
+    # }
 
     def _setup(self) -> None:
         """Create obj atributes from self.contains."""
@@ -119,7 +115,7 @@ class Base(ABC):
 class Page(Base):
     """Basic page class."""
 
-    def __init__(self, base: WebDriver = DRIVER):
+    def __init__(self, base: WebDriver):
         super().__init__(base)
 
     url = ""
@@ -164,13 +160,13 @@ class Page(Base):
     def close(self) -> None:
         """Close Page."""
 
-        self._base.close()
+        self._base.quit()
 
 
 class Accessory(Base):
     """Accessory page class, do not inherit."""
 
-    def __init__(self, base: WebDriver = DRIVER, url: str = "success"):
+    def __init__(self, base: WebDriver, url: str = "success"):
         super().__init__(base)
         self.url = url
 

@@ -2,12 +2,13 @@ import importlib
 from enum import Enum
 
 from selenium import webdriver
-from selenium.webdriver import Remote
-from webdriver_manager.manager import DriverManager
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from webdriver_manager.utils import ChromeType
 
 
 class Browser(Enum):
+    CHROME_REMOTE = "chrome_remote"
     CHROME = "chrome"
     CHROMIUM = "chromium"
     FIREFOX = "firefox"
@@ -15,12 +16,23 @@ class Browser(Enum):
     EDGE = "edge"
 
 
-def get_driver(browser: Enum = Browser.CHROME) -> Remote:
+def get_driver(browser: str, grid: str) -> WebDriver:
 
-    manager: DriverManager = None
     output = None
 
-    if browser.value == "chrome":
+    # run tests on remoute server
+    if browser.value == "chrome_remote":
+        options = webdriver.ChromeOptions()
+        options.add_argument("--ignore-ssl-errors=yes")
+        options.add_argument("--ignore-certificate-errors")
+        options.add_argument("--remote-debugging-port=9222")
+        options.headless = True
+        output = webdriver.Remote(
+            command_executor=grid, desired_capabilities=DesiredCapabilities.CHROME, options=options
+        )
+
+    # run tests locally
+    elif browser.value == "chrome":
         manager = importlib.import_module(name="webdriver_manager.chrome")
         options = webdriver.ChromeOptions()
         options.add_argument("--ignore-ssl-errors=yes")
@@ -46,6 +58,3 @@ def get_driver(browser: Enum = Browser.CHROME) -> Remote:
         output = webdriver.Opera(executable_path=manager.OperaDriverManager().install())
 
     return output
-
-
-DRIVER = get_driver()
