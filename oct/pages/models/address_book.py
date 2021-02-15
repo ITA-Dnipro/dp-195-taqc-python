@@ -35,7 +35,6 @@ class AddressBookPage(BasePage):
                 "XPATH",
                 "//*[@id='content']/div[2]",
             ),
-            "class": ButtonsClearfix
-        }
-
+            "class": ButtonsClearfix,
+        },
     }
