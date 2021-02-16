@@ -28,7 +28,7 @@ max-line-length=100
 
 [DESIGN]
 # Maximum number of arguments for function / method
-max-args=5
+max-args=7
 
 [SIMILARITIES]
  # Minimum lines number of a similarity.
@@ -45,7 +45,7 @@ max-locals=10
 max-returns=2
 
 # Maximum number of branch for function / method body
-max-branches=5
+max-branches=7
 
 # Maximum number of statements in function / method body
 max-statements=50
