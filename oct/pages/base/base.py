@@ -134,10 +134,10 @@ class Page(Base):
         alerts = [el.text for el in self._base.find_elements_by_class_name("alert")]
         return warn_texts + alerts
 
-    def load(self, host: str) -> None:
+    def load(self, protocol: str, host: str) -> None:
         """Load page."""
 
-        self._base.get(f"http://{host}/{self.url}")
+        self._base.get(f"{protocol}://{host}/{self.url}")
         self._base.maximize_window()
         self._setup()
 
@@ -147,11 +147,13 @@ class Page(Base):
         self._base.get(link)
         self._setup()
 
-    def add_logged_in_cookie_session(self, host: str, email: str, password: str) -> None:
+    def add_logged_in_cookie_session(
+        self, protocol: str, host: str, email: str, password: str
+    ) -> None:
         """Add logged in cookie session."""
 
         data = {"email": email, "password": password}
-        url = f"https://{host}/index.php?route=account/login"
+        url = f"{protocol}://{host}/index.php?route=account/login"
         request = Request(method="POST", url=url, data=data)
         session = Session()
         session.send(request.prepare(), verify=False)
