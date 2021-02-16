@@ -1,6 +1,8 @@
 testbed:
     name: sampleTestbed
     alias: topologySampleTestbed
+    custom:
+        selenium-grid: http://34.107.116.227:4444/wd/hub
 devices:
     opencart-testing-vm:
         os: 'linux'
