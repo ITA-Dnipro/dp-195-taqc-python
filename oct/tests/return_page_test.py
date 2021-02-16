@@ -3,11 +3,9 @@
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 
 from oct.pages import ReturnPage
-from oct.tests import test_run
 
 
 class EmailValidationTest(Testcase):
-
     @setup
     def start(self, driver) -> None:
         self.page = ReturnPage(driver)
