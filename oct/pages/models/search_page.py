@@ -110,8 +110,9 @@ class SearchPage(BasePage):
         "pages": {"locator": ("XPATH", '//*[@id="content"]/div[4]/div[2]'), "class": Element},
     }
 
-    def load(self, host: str):
-        super().load(host)
+    def load(self, protocol: str, host: str):
+        super().load(protocol, host)
+        self._protocol = protocol
         self._host = host
 
     def _sub_query_parameter(self, query: str):
