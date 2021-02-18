@@ -16,7 +16,6 @@ class AddAddressTest(Testcase):
 
     @test
     def valid_data(self, steps, testdata, host) -> None:
-        print(testdata)
         with steps.start("first step", description="Fill AddAddress Form"):
             self.page.form.fill_out(
                 first_name=testdata["first_name"],
