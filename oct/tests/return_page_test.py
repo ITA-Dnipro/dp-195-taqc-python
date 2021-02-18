@@ -2,13 +2,16 @@
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 
+from oct.drivers import get_driver
 from oct.pages import ReturnPage
 
 
 class EmailValidationTest(Testcase):
+
     @setup
-    def start(self, driver) -> None:
-        self.page = ReturnPage(driver)
+    def start(self, browser, grid) -> None:
+        self.driver = get_driver(browser, grid)
+        self.page = ReturnPage(self.driver)
         loop.mark(self.valid_data, testdata=self.parameters["valid_data"])
         loop.mark(self.invalid_data, testdata=self.parameters["invalid_data"])
 

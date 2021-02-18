@@ -1,10 +1,10 @@
-from pages.base.elements import (
+from oct.pages.base.elements import (
     RadioButton,
     Block,
     InputField,
     Clickable,
     CheckBox,
-    Dropdown,
+    DropDown,
     RadioButtonGroup,
 )
 from oct.pages.base.page import BasePage
@@ -57,8 +57,8 @@ class BillingDetails(Block):
         "address_2": {"locator": ("ID", "input-payment-address-2"), "class": InputField},
         "city": {"locator": ("ID", "input-payment-city"), "class": InputField},
         "post_code": {"locator": ("ID", "input-payment-postcode"), "class": InputField},
-        "country": {"locator": ("ID", "input-payment-country"), "class": Dropdown},
-        "region_state": {"locator": ("ID", "input-payment-zone"), "class": Dropdown},
+        "country": {"locator": ("ID", "input-payment-country"), "class": DropDown},
+        "region_state": {"locator": ("ID", "input-payment-zone"), "class": DropDown},
         "my_delivery_and_billing_addresses": {
             "locator": ("XPATH", "//*[@id='collapse-payment-address']/div/div[2]/label/input"),
             "class": CheckBox,
@@ -90,8 +90,8 @@ class DeliveryDetails(Block):
         "address_2": {"locator": ("ID", "input-shipping-address-2"), "class": InputField},
         "city": {"locator": ("ID", "input-shipping-city"), "class": InputField},
         "post_code": {"locator": ("ID", "input-shipping-postcode"), "class": InputField},
-        "country": {"locator": ("ID", "input-shipping-country"), "class": Dropdown},
-        "region_state": {"locator": ("ID", "input-shipping-zone"), "class": Dropdown},
+        "country": {"locator": ("ID", "input-shipping-country"), "class": DropDown},
+        "region_state": {"locator": ("ID", "input-shipping-zone"), "class": DropDown},
         "continue_button": {"locator": ("ID", "button-guest-shipping"), "class": Clickable},
     }
 
