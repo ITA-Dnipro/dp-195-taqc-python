@@ -7,7 +7,6 @@ from oct.pages import ReturnPage
 
 
 class EmailValidationTest(Testcase):
-
     @setup
     def start(self, browser, grid) -> None:
         self.driver = get_driver(browser, grid)

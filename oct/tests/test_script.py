@@ -1,3 +1,5 @@
+# pylint: disable=no-self-use # pyATS-related exclusion
+# pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 from pyats import aetest
 
 from oct.tests import test_run
@@ -5,7 +7,6 @@ from oct.tests import return_page_test, shopping_cart_test
 
 
 class ScriptCommonSetup(aetest.CommonSetup):
-
     @aetest.subsection
     def start(self, session):
         session.connect()
@@ -21,7 +22,6 @@ class ShoppingCartTest(shopping_cart_test.ShoppingCartTest):
 
 
 class ScriptCommonCleanup(aetest.CommonCleanup):
-
     @aetest.subsection
     def stop(self, session):
         session.stop_services()

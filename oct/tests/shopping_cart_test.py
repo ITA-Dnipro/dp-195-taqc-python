@@ -1,6 +1,5 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
-
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from oct.drivers import get_driver
@@ -8,7 +7,6 @@ from oct.pages import ProductPage, ShoppingCartPage
 
 
 class ShoppingCartTest(Testcase):
-
     @setup
     def precondition(self, browser, grid, protocol, host, email, password) -> None:
 

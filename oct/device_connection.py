@@ -16,10 +16,10 @@ class NewSession:
         self._device.disconnect()
 
     def start_services(self) -> None:
-        self._device.execute('docker-compose -f docker-compose-webapp.yaml start')
-        self._device.execute('docker-compose -f docker-compose-selenium.yaml start')
+        self._device.execute("docker-compose -f docker-compose-webapp.yaml start")
+        self._device.execute("docker-compose -f docker-compose-selenium.yaml start")
         time.sleep(5)
 
     def stop_services(self) -> None:
-        self._device.execute('docker-compose -f docker-compose-webapp.yaml stop')
-        self._device.execute('docker-compose -f docker-compose-selenium.yaml stop')
+        self._device.execute("docker-compose -f docker-compose-webapp.yaml stop")
+        self._device.execute("docker-compose -f docker-compose-selenium.yaml stop")
