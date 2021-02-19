@@ -14,5 +14,5 @@ devices:
                 username: testuser
                 protocol: ssh
                 ip: "34.107.116.227"
-                password:
+                password: testpass
         type: 'linux'

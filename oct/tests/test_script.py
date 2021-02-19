@@ -29,4 +29,8 @@ class ScriptCommonCleanup(aetest.CommonCleanup):
 
 
 if __name__ == "__main__":
+    # run aetest from CLI:
+    #    python -m oct.tests.test_script -datafile="./oct/tests/datafile/common_data.yaml"
+    # you can run separate testcase(s) by specifying uid parameter:
+    #    python -m oct.tests.test_script -datafile="./oct/tests/datafile/common_data.yaml"  -uids="Or('tc_name')"
     test_run()
