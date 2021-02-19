@@ -3,10 +3,6 @@ import time
 from pyats.topology import Device
 
 
-class ServiceError(BaseException):
-    pass
-
-
 class NewSession:
     """Class provides interfaces to interact with the device."""
 
@@ -20,10 +16,10 @@ class NewSession:
         self._device.disconnect()
 
     def start_services(self) -> None:
-        # self._device.execute('selenium start')
-        # time.sleep(15)
-        # self._device.execute('\n')
-        pass
+        self._device.execute('docker-compose -f docker-compose-webapp.yaml start')
+        self._device.execute('docker-compose -f docker-compose-selenium.yaml start')
+        time.sleep(5)
 
     def stop_services(self) -> None:
-        self._device.execute('selenium stop')
+        self._device.execute('docker-compose -f docker-compose-webapp.yaml stop')
+        self._device.execute('docker-compose -f docker-compose-selenium.yaml stop')
