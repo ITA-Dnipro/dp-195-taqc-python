@@ -1,0 +1,26 @@
+testcases:
+    EmailValidationTest:
+        parameters:
+            valid_data:
+                - "z@mail.ua"
+                - "3J/dqlrszBjlRLo^zWX9W.vb#GUVJgwq2s#N3vd2bWDk3%Ogi}vQTAeXu+{Nq_JX@mail.ua"
+                - "johndou@z.ua"
+                - "johndou@uorhaCumdDwL5nXfHL6lVa9DBP29pRSvn4O4CMVre3ksJ620e9HFTQPRXHqPN4t.ua"
+                - "johndou@mail.z"
+                - "johndou@mail.ZdXrYsrrPVqtYTxtMwqxAljL17vEHgfI0aANGGyOgiFqfuO3fVawhtoKvwvkKHS"
+                - "z^ss0LTb'=LuJz{MBp}2zH=_7$8.Ke2x@x0m1OsWBywjT1b0jShJVzmzc6zgQUqfm.JRdhdjEgL0fowPsNupWKVrsbBBjOe9"
+                - "johndou@e-mail.ua-dp"
+                - "johndou@mail.com.ua"
+            invalid_data:
+                - ""
+                - "johndoumail.ua"
+                - "@mail.ua"
+                - "johndou@"
+                - "johndou@mail"
+                - "AI_sASJ~|2{0WTj23%M'nJ|{TY8-cp=h{hHxV}0f_i5P'1^P_z7Il6i_oPLNw|zu$@mail.ua"
+                - "johndou@dbmnRHTyTdHI14C5gsLppS8ZDnbRmnYhB7lFtCqBsaqnThHmxrAgIDMKSZt9gYHC.ua"
+                - "johndou@mail.JPVc3CedDJsv2t5A7LlEBNjntJaLEbF9ZMF5Zk1KHh0DIdtYYj2WQYZstQq5tYGI"
+                - "%VU}pKcS3%aSmC2tY#Mt=BAOudoAE&DU@4dia2BKwLZijUTrUatIyLA6PCegxTYmO.bY7Gjkvm2MvJsDJHziFMMsfV3ymwvAl"
+
+            message: E-Mail Address does not appear to be valid!
+
