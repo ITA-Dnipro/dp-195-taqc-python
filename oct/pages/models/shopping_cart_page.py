@@ -1,6 +1,5 @@
 from oct.pages.base.elements import Form, InputField, Clickable, Block
 from oct.pages.base.page import BasePage
-
 from oct.pages import Accessory
 
 
@@ -95,12 +94,11 @@ class ShoppingCartPage(BasePage):
         return self.info_table_results["Total"]
 
     def apply_gift_certificate(self, gift_certificate):
-        self.success_page = Accessory()
         self.use_gift_certificate_dropdown.click()
         self.certificate_form.is_displayed
         self.certificate_form.fill_out(gift_certificate=gift_certificate)
         self.certificate_form.send()
-        self.success_page.is_available
+        Accessory.is_available
         self._setup()
 
     @property
