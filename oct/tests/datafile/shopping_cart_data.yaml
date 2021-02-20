@@ -1,4 +1,4 @@
 testcases:
-    ShoppingCartTest:
+    GiftCertificateBonusTest:
         parameters:
             gift_certificate: 100dollars
