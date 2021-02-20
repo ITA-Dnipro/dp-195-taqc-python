@@ -1,5 +1,3 @@
-import time
-
 from pyats.topology import Device
 
 
@@ -18,7 +16,6 @@ class NewSession:
     def start_services(self) -> None:
         self._device.execute("docker-compose -f docker-compose-webapp.yaml start")
         self._device.execute("docker-compose -f docker-compose-selenium.yaml start")
-        # time.sleep(5)
 
     def stop_services(self) -> None:
         self._device.execute("docker-compose -f docker-compose-webapp.yaml stop")
