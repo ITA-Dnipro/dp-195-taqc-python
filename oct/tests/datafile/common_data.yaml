@@ -1,3 +1,4 @@
 extends:
        - return_page_data.yaml
        - shopping_cart_data.yaml
+       - login_page_data.yaml

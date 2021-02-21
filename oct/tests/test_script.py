@@ -3,7 +3,7 @@
 from pyats import aetest
 
 from oct.tests import test_run
-from oct.tests import return_page_test, shopping_cart_test
+from oct.tests import return_page_test, shopping_cart_test, login_page_test
 
 
 class ScriptCommonSetup(aetest.CommonSetup):
@@ -18,6 +18,10 @@ class EmailValidationTest(return_page_test.EmailValidationTest):
 
 
 class ShoppingCartTest(shopping_cart_test.ShoppingCartTest):
+    """..."""
+
+
+class LoginTest(login_page_test.LoginPageTest):
     """..."""
 
 
