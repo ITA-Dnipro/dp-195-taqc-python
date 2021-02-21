@@ -3,7 +3,7 @@
 from pyats import aetest
 
 from oct.tests import test_run
-from oct.tests import return_page_test, shopping_cart_test
+from oct.tests import return_page_test, shopping_cart_test, search_page_test
 
 
 class ScriptCommonSetup(aetest.CommonSetup):
@@ -18,6 +18,14 @@ class EmailValidationTest(return_page_test.EmailValidationTest):
 
 
 class GiftCertificateBonusTest(shopping_cart_test.GiftCertificateBonusTest):
+    """..."""
+
+
+class SearchInTitlesTest(search_page_test.SearchInTitlesTest):
+    """..."""
+
+
+class SearchSortingTest(search_page_test.SearchSortingTest):
     """..."""
 
 
