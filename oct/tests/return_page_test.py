@@ -1,7 +1,6 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 import os
-import shutil
 
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 
@@ -20,9 +19,9 @@ class EmailValidationTest(Testcase):
 
     @test
     def valid_data(self, steps, protocol, host, testdata, message) -> None:
-        # log_managed["handler"].changeFile(
-        #     os.path.join(os.path.dirname(__file__), "log/return_page_valid_data.log")
-        # )
+        log_managed["handler"].changeFile(
+            os.path.join(os.path.dirname(__file__), "log/return_page_valid_data.log")
+        )
         with steps.start("open page"):
             self.page.load(protocol, host)
 
@@ -34,20 +33,15 @@ class EmailValidationTest(Testcase):
 
         with steps.start("check result"):
             if message not in self.page.get_alerts():
-                shutil.copy2(
-                    os.path.join(os.path.dirname(__file__), "log/temp.log"),
-                    os.path.join(os.path.dirname(__file__), "log/return_page_valid_data.log")
-                )
-                open(os.path.join(os.path.dirname(__file__), "log/temp.log"), 'w').close()
                 self.passed()
             else:
                 self.failed(reason="Email is invalid")
 
     @test
     def invalid_data(self, steps, protocol, host, testdata, message) -> None:
-        # log_managed["handler"].changeFile(
-        #     os.path.join(os.path.dirname(__file__), "log/return_page_invalid_data.log")
-        # )
+        log_managed["handler"].changeFile(
+            os.path.join(os.path.dirname(__file__), "log/return_page_invalid_data.log")
+        )
         with steps.start("open page"):
             self.page.load(protocol, host)
 
@@ -59,11 +53,6 @@ class EmailValidationTest(Testcase):
 
         with steps.start("check result"):
             if message in self.page.get_alerts():
-                shutil.copy2(
-                    os.path.join(os.path.dirname(__file__), "log/temp.log"),
-                    os.path.join(os.path.dirname(__file__), "log/return_page_invalid_data.log")
-                )
-                open(os.path.join(os.path.dirname(__file__), "log/temp.log"), 'w').close()
                 self.passed()
             else:
                 self.failed(reason="Email is valid")
