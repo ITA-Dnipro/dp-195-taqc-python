@@ -9,7 +9,7 @@ from oct.pages import ProductPage, ShoppingCartPage
 from settings import log_managed
 
 
-class ShoppingCartTest(Testcase):
+class GiftCertificateBonusTest(Testcase):
     @setup
     def precondition(self, browser, grid, protocol, host, email, password) -> None:
         self.driver = get_driver(browser, grid)
@@ -20,7 +20,7 @@ class ShoppingCartTest(Testcase):
         self.page = ShoppingCartPage(self.driver)
 
     @test
-    def test_submit(self, steps, protocol, host, gift_certificate: str = "100dollars") -> None:
+    def test_submit(self, steps, protocol, host, gift_certificate) -> None:
         log_managed["handler"].changeFile(
             os.path.join(os.path.dirname(__file__), "log/shopping_cart_test_submit.log")
         )
