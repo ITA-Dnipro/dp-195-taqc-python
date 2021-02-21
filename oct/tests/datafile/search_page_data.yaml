@@ -1,0 +1,5 @@
+testcases:
+    SearchInTitlesTest:
+        parameters:
+            keyword: "mac"
+

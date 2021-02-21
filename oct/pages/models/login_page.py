@@ -4,7 +4,7 @@ from oct.pages.base.elements import Form, Block, InputField, Clickable
 
 class NewCustomerButton(Block):
     contains = {
-        "button": {"locator": ("XPATH", '//*[start-with(@id="content")]'), "class": Clickable} # '//*[@id="content"]/div/div[1]/div/a'
+        "button": {"locator": ("XPATH", '//*[start-with(@id="content")]'), "class": Clickable}
     }
 
 
@@ -43,6 +43,6 @@ class LoginPage(BasePage):
             "locator": ("XPATH", '//*[@id="content"]/div/div[2]/div/form'),
             "class": LoginForm,
         },
-        "button": {"locator": ("XPATH", '//*[start-with(@id="content")]'), "class": Clickable}
-        # "action": {"locator": ("XPATH", '//*[@id="content"]/div/div[1]/div'), "class": NewCustomer},
+        "button": {"locator": ("XPATH", '//*[start-with(@id="content")]'), "class": Clickable},
+        "action": {"locator": ("XPATH", '//*[@id="content"]/div/div[1]/div'), "class": NewCustomer},
     }
