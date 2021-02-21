@@ -6,7 +6,7 @@ from oct.drivers import get_driver
 from oct.pages import ProductPage, ShoppingCartPage
 
 
-class ShoppingCartTest(Testcase):
+class GiftCertificateBonusTest(Testcase):
     @setup
     def precondition(self, browser, grid, protocol, host, email, password) -> None:
 
@@ -18,7 +18,7 @@ class ShoppingCartTest(Testcase):
         self.page = ShoppingCartPage(self.driver)
 
     @test
-    def test_submit(self, steps, protocol, host, gift_certificate: str = "100dollars") -> None:
+    def test_submit(self, steps, protocol, host, gift_certificate) -> None:
 
         with steps.start("open page"):
             self.page.load(protocol, host)

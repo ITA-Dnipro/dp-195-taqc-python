@@ -17,7 +17,7 @@ class EmailValidationTest(return_page_test.EmailValidationTest):
     """..."""
 
 
-class ShoppingCartTest(shopping_cart_test.ShoppingCartTest):
+class GiftCertificateBonusTest(shopping_cart_test.GiftCertificateBonusTest):
     """..."""
 
 
