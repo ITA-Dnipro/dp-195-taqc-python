@@ -22,10 +22,11 @@ class ShoppingCartTest(shopping_cart_test.ShoppingCartTest):
 
 
 class ScriptCommonCleanup(aetest.CommonCleanup):
-    @aetest.subsection
-    def stop(self, session):
-        session.stop_services()
-        session.disconnect()
+    pass
+    # @aetest.subsection
+    # def stop(self, session):
+    #     session.stop_services()
+    #     session.disconnect()
 
 
 if __name__ == "__main__":
