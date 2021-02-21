@@ -3,6 +3,7 @@ selenium==3.141.0
 webdriver_manager==3.3.0
 requests==2.21.0
 urllib3==1.24.2
+polling2
 paramiko==2.4.2
 scp==0.13.2
 mimesis==3.1.0
