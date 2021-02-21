@@ -1,14 +1,21 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
-from pyats.aetest import Testcase, test, setup, cleanup, loop
+import logging
 
 from oct.drivers import get_driver
 from oct.pages import ReturnPage
+from pyats import log
+from pyats.aetest import Testcase, test, setup, cleanup, loop
+
+from settings import log_level, logger
 
 
 class EmailValidationTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
+        log.managed_handlers["tasklog"] = logging.FileHandler("oct/tests/log/EmailValidationTest.log", mode="w", delay=True)
+        log.managed_handlers.tasklog.setLevel(log_level)
+        logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
         self.page = ReturnPage(self.driver)
         loop.mark(self.valid_data, testdata=self.parameters["valid_data"])
@@ -52,4 +59,5 @@ class EmailValidationTest(Testcase):
 
     @cleanup
     def close(self) -> None:
+        logger.removeHandler(log.managed_handlers.tasklog)
         self.page.close()

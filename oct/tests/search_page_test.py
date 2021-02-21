@@ -1,15 +1,22 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 # pylint: disable=not-callable # pyATS-related exclusion
-from pyats.aetest import Testcase, test, setup, cleanup
+import logging
 
 from oct.drivers import get_driver
 from oct.pages import SearchPage
+from pyats import log
+from pyats.aetest import Testcase, test, setup, cleanup
+
+from settings import log_level, logger
 
 
 class SearchInTitlesTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
+        log.managed_handlers["tasklog"] = logging.FileHandler("oct/tests/log/SearchInTitles.log", mode="w", delay=True)
+        log.managed_handlers.tasklog.setLevel(log_level)
+        logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
         self.page = SearchPage(self.driver)
 
@@ -31,6 +38,7 @@ class SearchInTitlesTest(Testcase):
 
     @cleanup
     def close(self) -> None:
+        logger.removeHandler(log.managed_handlers.tasklog)
         self.page.close()
 
 
@@ -83,4 +91,5 @@ class SearchSortingTest(Testcase):
 
     @cleanup
     def close(self) -> None:
+        logger.removeHandler(log.managed_handlers.tasklog)
         self.page.close()

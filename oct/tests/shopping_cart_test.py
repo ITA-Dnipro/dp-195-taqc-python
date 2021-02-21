@@ -1,15 +1,21 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
-from pyats.aetest import Testcase, test, setup, cleanup
+import logging
 
 from oct.drivers import get_driver
 from oct.pages import ProductPage, ShoppingCartPage
+from pyats import log
+from pyats.aetest import Testcase, test, setup, cleanup
+
+from settings import log_level, logger
 
 
 class GiftCertificateBonusTest(Testcase):
     @setup
     def precondition(self, browser, grid, protocol, host, email, password) -> None:
-
+        log.managed_handlers["tasklog"] = logging.FileHandler("oct/tests/log/GiftCertificateBonus.log", mode="w", delay=True)
+        log.managed_handlers.tasklog.setLevel(log_level)
+        logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
         self.page = ProductPage(self.driver)
         self.page.load(protocol, host)
@@ -36,4 +42,5 @@ class GiftCertificateBonusTest(Testcase):
 
     @cleanup
     def close(self) -> None:
+        logger.removeHandler(log.managed_handlers.tasklog)
         self.page.close()
