@@ -1,12 +1,24 @@
+# pylint: disable=no-self-use # pyATS-related exclusion
+# pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
+import logging
+
+from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 
 from oct.drivers import get_driver
 from oct.pages import LoginPage, Accessory
 
+from settings import log_level, logger
+
 
 class LoginPageTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
+        log.managed_handlers["tasklog"] = logging.FileHandler(
+            "oct/tests/log/LoginPageTest.log", mode="w", delay=True
+        )
+        log.managed_handlers.tasklog.setLevel(log_level)
+        logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
         self.page = LoginPage(self.driver)
         self.account = Accessory(self.driver, url="account")
@@ -30,6 +42,10 @@ class LoginPageTest(Testcase):
             if message in self.page.get_alerts():
                 self.passed()
             else:
+                logger.error(
+                    "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
+                    self.page.get_screenshot(),
+                )
                 self.failed(reason="Email and password are valid")
 
     @test
@@ -49,6 +65,10 @@ class LoginPageTest(Testcase):
             if self.account.is_available:
                 self.passed()
             else:
+                logger.error(
+                    "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
+                    self.page.get_screenshot(),
+                )
                 self.failed(reason="Email or password is invalid")
 
 
