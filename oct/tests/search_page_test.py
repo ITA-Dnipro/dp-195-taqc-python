@@ -9,6 +9,7 @@ from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from settings import log_level, logger
+import uuid
 
 
 class SearchInTitlesTest(Testcase):
@@ -34,6 +35,9 @@ class SearchInTitlesTest(Testcase):
             product_titles = (product["title"] for product in search_result)
             for title in product_titles:
                 if keyword.lower() not in title.lower():
+                    name = uuid.uuid4()
+                    self.page.get_screenshot(name)
+                    logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
                     self.failed("Product title does not match the search entry!")
 
     @cleanup
@@ -45,6 +49,9 @@ class SearchInTitlesTest(Testcase):
 class SearchSortingTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
+        log.managed_handlers["tasklog"] = logging.FileHandler("oct/tests/log/SearchSorting.log", mode="w", delay=True)
+        log.managed_handlers.tasklog.setLevel(log_level)
+        logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
         self.page = SearchPage(self.driver)
 
@@ -60,6 +67,9 @@ class SearchSortingTest(Testcase):
         product_titles = [product["title"].lower() for product in sort_result]
         expected_order = sorted(product_titles)
         if product_titles != expected_order:
+            name = uuid.uuid4()
+            self.page.get_screenshot(name)
+            logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
             self.failed("Product title shoud be sorted in alphabetical order!")
 
     @test
@@ -69,6 +79,9 @@ class SearchSortingTest(Testcase):
         product_titles = [product["title"].lower() for product in sort_result]
         expected_order = sorted(product_titles, reverse=True)
         if product_titles != expected_order:
+            name = uuid.uuid4()
+            self.page.get_screenshot(name)
+            logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
             self.failed("Product title shoud be sorted in reverse alphabetical order!")
 
     @test
@@ -78,6 +91,9 @@ class SearchSortingTest(Testcase):
         product_prices = [product["price"] for product in sort_result]
         expected_order = sorted(product_prices)
         if product_prices != expected_order:
+            name = uuid.uuid4()
+            self.page.get_screenshot(name)
+            logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
             self.failed("Product prices shoud be sorted in ascending order!")
 
     @test
@@ -87,6 +103,9 @@ class SearchSortingTest(Testcase):
         product_prices = [product["price"] for product in sort_result]
         expected_order = sorted(product_prices, reverse=True)
         if product_prices != expected_order:
+            name = uuid.uuid4()
+            self.page.get_screenshot(name)
+            logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
             self.failed("Product prices shoud be sorted in descending order!")
 
     @cleanup

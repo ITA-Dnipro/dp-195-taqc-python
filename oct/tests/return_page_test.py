@@ -8,6 +8,7 @@ from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 
 from settings import log_level, logger
+import uuid
 
 
 class EmailValidationTest(Testcase):
@@ -37,6 +38,9 @@ class EmailValidationTest(Testcase):
             if message not in self.page.get_alerts():
                 self.passed()
             else:
+                name = uuid.uuid4()
+                self.page.get_screenshot(name)
+                logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
                 self.failed(reason="Email is invalid")
 
     @test
@@ -55,6 +59,9 @@ class EmailValidationTest(Testcase):
             if message in self.page.get_alerts():
                 self.passed()
             else:
+                name = uuid.uuid4()
+                self.page.get_screenshot(name)
+                logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
                 self.failed(reason="Email is valid")
 
     @cleanup

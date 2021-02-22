@@ -8,6 +8,7 @@ from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup
 
 from settings import log_level, logger
+import uuid
 
 
 class GiftCertificateBonusTest(Testcase):
@@ -38,6 +39,9 @@ class GiftCertificateBonusTest(Testcase):
             if actual_result == expected_result:
                 self.passed()
             else:
+                name = uuid.uuid4()
+                self.page.get_screenshot(name)
+                logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
                 self.failed(reason="Incorrect result")
 
     @cleanup
