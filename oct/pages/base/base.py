@@ -1,17 +1,16 @@
 """Module contains base classes for page objects and webelements."""
 
-import time
 import contextlib
+import time
+import uuid
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
 from requests import Request, Session
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-
-from oct.pages.drivers import DRIVER
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 def timeout(timesec: int):
@@ -41,31 +40,30 @@ class Base(ABC):
         self._base = base
 
     contains: Optional[dict] = None
-    """
-    contains class attribute contains page's webelements. Webelements set
-    is the page specific.
-    Example:
-    contains = {
-        elementName: {
-            "locator": (by, value),
-            "class": Element
-        },
-        ...
-    }
 
-    For pages with dynamically generated content (Search Page, Category Page)
-    specify loadable webelement (such ProductThumb) by adding "is_loaded"
-    parameter to the element's dict as such:
-    contains = {
-        ...
-        elementName: {
-            "locator": (by, value),
-            "class": ProductThumb,
-            "is_loaded": True
-        },
-        ...
-    }
-    """
+    # contains class attribute contains page's webelements. Webelements set
+    # is the page specific.
+    # Example:
+    # contains = {
+    #     elementName: {
+    #         "locator": (by, value),
+    #         "class": Element
+    #     },
+    #     ...
+    # }
+
+    # For pages with dynamically generated content (Search Page, Category Page)
+    # specify loadable webelement (such ProductThumb) by adding "is_loaded"
+    # parameter to the element's dict as such:
+    # contains = {
+    #     ...
+    #     elementName: {
+    #         "locator": (by, value),
+    #         "class": ProductThumb,
+    #         "is_loaded": True
+    #     },
+    #     ...
+    # }
 
     def _setup(self) -> None:
         """Create obj atributes from self.contains."""
@@ -119,7 +117,7 @@ class Base(ABC):
 class Page(Base):
     """Basic page class."""
 
-    def __init__(self, base: WebDriver = DRIVER):
+    def __init__(self, base: WebDriver):
         super().__init__(base)
 
     url = ""
@@ -138,10 +136,10 @@ class Page(Base):
         alerts = [el.text for el in self._base.find_elements_by_class_name("alert")]
         return warn_texts + alerts
 
-    def load(self, host: str) -> None:
+    def load(self, protocol: str, host: str) -> None:
         """Load page."""
 
-        self._base.get(f"http://{host}/{self.url}")
+        self._base.get(f"{protocol}://{host}/{self.url}")
         self._base.maximize_window()
         self._setup()
 
@@ -151,26 +149,38 @@ class Page(Base):
         self._base.get(link)
         self._setup()
 
-    def add_logged_in_cookie_session(self, host: str, email: str, password: str) -> None:
+    def add_logged_in_cookie_session(
+        self, protocol: str, host: str, email: str, password: str
+    ) -> None:
         """Add logged in cookie session."""
 
         data = {"email": email, "password": password}
-        url = f"https://{host}/index.php?route=account/login"
+        url = f"{protocol}://{host}/index.php?route=account/login"
         request = Request(method="POST", url=url, data=data)
         session = Session()
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
+    def get_screenshot(self):
+        """Create screenshot of current page."""
+
+        name = uuid.uuid4()
+        screenshot_object = self._base.find_element_by_tag_name("body")
+        total_height = screenshot_object.size["height"]
+        self._base.set_window_size(1400, total_height)
+        self._base.save_screenshot(f"oct/tests/screenshot/{name}.png")
+        return name
+
     def close(self) -> None:
         """Close Page."""
 
-        self._base.close()
+        self._base.quit()
 
 
 class Accessory(Base):
     """Accessory page class, do not inherit."""
 
-    def __init__(self, base: WebDriver = DRIVER, url: str = "success"):
+    def __init__(self, base: WebDriver, url: str = "success"):
         super().__init__(base)
         self.url = url
 

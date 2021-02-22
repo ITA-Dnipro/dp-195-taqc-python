@@ -1,0 +1,4 @@
+testcases:
+    GiftCertificateBonusTest:
+        parameters:
+            gift_certificate: 100dollars

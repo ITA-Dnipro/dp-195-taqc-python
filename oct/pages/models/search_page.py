@@ -15,7 +15,7 @@ from oct.pages.base.elements import (
 def reload_page(func):
     def wrapper(self, *args, **kwargs):
         func(self, *args, **kwargs)
-        self.load(self._host)
+        self.load(self._protocol, self._host)
         return
 
     return wrapper
@@ -73,25 +73,25 @@ class SortingBlock(Block):
 
     def sort_by(self, name: str = "Default"):
 
-        query = ""
+        query_parameters = dict()
 
         if name != "Default":
             raw_value = self.sort_by_drop.get_value(name).split("&")
-            sort_query = list(filter(lambda x: "sort=" in x, raw_value))[0]
-            query = sort_query
+            query_parts = list(filter(lambda x: "sort=" in x or "order=" in x, raw_value))
+            query_parameters = dict(i.split("=") for i in query_parts)
 
-        return query
+        return query_parameters
 
     def show(self, param: str = "15"):
 
-        query = ""
+        query_parameters = dict()
 
         if param != "15":
             raw_value = self.show_drop.get_value(param).split("&")
-            show_query = list(filter(lambda x: "limit=" in x, raw_value))[0]
-            query = show_query
+            query_parts = list(filter(lambda x: "limit=" in x, raw_value))
+            query_parameters = dict(i.split("=") for i in query_parts)
 
-        return query
+        return query_parameters
 
 
 class SearchPage(BasePage):
@@ -110,23 +110,16 @@ class SearchPage(BasePage):
         "pages": {"locator": ("XPATH", '//*[@id="content"]/div[4]/div[2]'), "class": Element},
     }
 
-    def load(self, host: str):
-        super().load(host)
+    def load(self, protocol: str, host: str):
+        super().load(protocol, host)
+        self._protocol = protocol
         self._host = host
 
-    def _sub_query_parameter(self, query: str):
-        param, val = query.split("=")
-        param_present = False
-        url_parts = self.url.split("&")
-        for index, part in enumerate(url_parts):
-            if param in part:
-                param_present = True
-                url_parts[index] = f"{param}={val}"
-
-        if param_present is True:
-            self.url = "&".join(url_parts)
-        else:
-            self.url += f"&{param}={val}"
+    def _sub_query_parameter(self, query: dict):
+        current_url_parts = self.url.split("&")
+        current_url_parameters = dict(i.split("=") for i in current_url_parts)
+        current_url_parameters.update(query)
+        self.url = "&".join([f"{item[0]}={item[1]}" for item in current_url_parameters.items()])
 
     @reload_page
     def search(
@@ -168,13 +161,17 @@ class SearchPage(BasePage):
             self._sub_query_parameter(goto)
 
     def get_products(self) -> list:
+        pattern = r"^\$(\d+,?\d+\.\d+)\W"
+        regEx = re.compile(pattern)
+
         result = []
         for product in self.products:
+            prod_price = regEx.findall(product.price.text)[0].replace(",", "")
             result.append(
                 {
                     "title": product.title.text,
                     "description": product.description.text,
-                    "price": product.price.text,
+                    "price": float(prod_price),
                 }
             )
         return result
