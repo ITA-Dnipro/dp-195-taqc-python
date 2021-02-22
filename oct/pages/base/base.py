@@ -139,7 +139,8 @@ class Page(Base):
 
         self._base.get(f"{protocol}://{host}/{self.url}")
         self._base.maximize_window()
-        self._setup()
+        if self.is_available:
+            self._setup()
 
     def redirect_from(self, link: str) -> None:
         """Load page from external link."""

@@ -5,41 +5,33 @@ from oct.pages.base.elements import (
     Clickable,
     CheckBox,
     DropDown,
-    RadioButtonGroup,
 )
 from oct.pages.base.page import BasePage
 
 
-class CheckoutOptions(RadioButtonGroup):
+class CheckoutOptions(Block):
     contains = {
         "register_account": {
             "locator": (
                 "XPATH",
-                '//*[@id="collapse-checkout-option"]/div/div/div[1]/div[1]/label/input',
+                "//input[@value='register']"
+                #'//*[@id="collapse-checkout-option"]/div/div/div[1]/div[1]/label/input'
             ),
             "class": RadioButton,
         },
         "guest_checkout": {
             "locator": (
                 "XPATH",
-                '//*[@id="collapse-checkout-option"]/div/div/div[1]/div[2]/label/input',
+                #'//*[@id="collapse-checkout-option"]/div/div/div[1]/div[2]/label/input'
+                "//input[@value='guest']"
             ),
             "class": RadioButton,
         },
-    }
-
-
-class CheckoutContinueButton(Clickable):
-    contains = {"continue_button": {"locator": ("ID", "button-account"), "class": Clickable}}
-
-
-class ReturningCustomer(Block):
-    contains = {
+        "continue_button": {"locator": ("ID","button-account"),"class": Clickable},
         "email": {"locator": ("ID", "input-email"), "class": InputField},
         "password": {"locator": ("ID", "input-password"), "class": InputField},
         "login_button": {"locator": ("ID", "button-login"), "class": Clickable},
     }
-
     def fill_out(self, **kwargs):
         self.email.fill(kwargs.get("email"))
         self.password.fill(kwargs.get("password"))
@@ -63,7 +55,7 @@ class BillingDetails(Block):
             "locator": ("XPATH", "//*[@id='collapse-payment-address']/div/div[2]/label/input"),
             "class": CheckBox,
         },
-        "continue_button": {"locator": ("ID", "button-guest"), "class": Clickable},
+        "continue_button": {"locator": ("ID", "button-guest"), "class": Clickable}
     }
 
     def fill_out(self, **kwargs):
@@ -81,66 +73,66 @@ class BillingDetails(Block):
         self.continue_button.click()
 
 
-class DeliveryDetails(Block):
-    contains = {
-        "first_name": {"locator": ("ID", "input-shipping-firstname"), "class": InputField},
-        "last_name": {"locator": ("ID", "input-shipping-lastname"), "class": InputField},
-        "company": {"locator": ("ID", "input-shipping-company"), "class": InputField},
-        "address_1": {"locator": ("ID", "input-shipping-address-1"), "class": InputField},
-        "address_2": {"locator": ("ID", "input-shipping-address-2"), "class": InputField},
-        "city": {"locator": ("ID", "input-shipping-city"), "class": InputField},
-        "post_code": {"locator": ("ID", "input-shipping-postcode"), "class": InputField},
-        "country": {"locator": ("ID", "input-shipping-country"), "class": DropDown},
-        "region_state": {"locator": ("ID", "input-shipping-zone"), "class": DropDown},
-        "continue_button": {"locator": ("ID", "button-guest-shipping"), "class": Clickable},
-    }
-
-    def fill_out(self, **kwargs):
-        self.first_name.fill(kwargs.get("first_name"))
-        self.last_name.fill(kwargs.get("last_name"))
-        self.company.fill(kwargs.get("company"))
-        self.address_1.fill(kwargs.get("address_1"))
-        self.address_2.fill(kwargs.get("address_2"))
-        self.city.fill(kwargs.get("city"))
-        self.post_code.fill(kwargs.get("post_code"))
-        self.country.select(kwargs.get("country"))
-        self.region_state.select(kwargs.get("region_state"))
-
-
-class DeliveryMethod(Block):
-    contains = {
-        "flat_shipping_rate": {
-            "locator": ("XPATH", "//*[@ id='collapse-shipping-method']/div/div[1]/label/input"),
-            "class": RadioButton,
-        },
-        "add_comments": {
-            "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div/p[4]/textarea"),
-            "class": InputField,
-        },
-        "continue_button": {"locator": ("ID", "button-shipping-method"), "class": Clickable},
-    }
-
-
-class PaymentMethod(Block):
-    contains = {
-        "cash_on_delivery": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[1]/label/input"),
-            "class": RadioButton,
-        },
-        "add_comments": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/p[3]/textarea"),
-            "class": InputField,
-        },
-        "terms_and_conditions": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[2]/div/input[1]"),
-            "class": CheckBox,
-        },
-        "continue_button": {"locator": ("ID", "button-payment-method"), "class": Clickable},
-    }
-
-
-class ConfirmOrderButton(Clickable):
-    contains = {"confirm_order_button": {"locator": ("ID", "button-confirm")}}
+# class DeliveryDetails(Block):
+#     contains = {
+#         "first_name": {"locator": ("ID", "input-shipping-firstname"), "class": InputField},
+#         "last_name": {"locator": ("ID", "input-shipping-lastname"), "class": InputField},
+#         "company": {"locator": ("ID", "input-shipping-company"), "class": InputField},
+#         "address_1": {"locator": ("ID", "input-shipping-address-1"), "class": InputField},
+#         "address_2": {"locator": ("ID", "input-shipping-address-2"), "class": InputField},
+#         "city": {"locator": ("ID", "input-shipping-city"), "class": InputField},
+#         "post_code": {"locator": ("ID", "input-shipping-postcode"), "class": InputField},
+#         "country": {"locator": ("ID", "input-shipping-country"), "class": DropDown},
+#         "region_state": {"locator": ("ID", "input-shipping-zone"), "class": DropDown},
+#         "continue_button": {"locator": ("ID", "button-guest-shipping"), "class": Clickable},
+#     }
+#
+#     def fill_out(self, **kwargs):
+#         self.first_name.fill(kwargs.get("first_name"))
+#         self.last_name.fill(kwargs.get("last_name"))
+#         self.company.fill(kwargs.get("company"))
+#         self.address_1.fill(kwargs.get("address_1"))
+#         self.address_2.fill(kwargs.get("address_2"))
+#         self.city.fill(kwargs.get("city"))
+#         self.post_code.fill(kwargs.get("post_code"))
+#         self.country.select(kwargs.get("country"))
+#         self.region_state.select(kwargs.get("region_state"))
+#
+#
+# class DeliveryMethod(Block):
+#     contains = {
+#         "flat_shipping_rate": {
+#             "locator": ("XPATH", "//*[@ id='collapse-shipping-method']/div/div[1]/label/input"),
+#             "class": RadioButton,
+#         },
+#         "add_comments": {
+#             "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div/p[4]/textarea"),
+#             "class": InputField,
+#         },
+#         "continue_button": {"locator": ("ID", "button-shipping-method"), "class": Clickable},
+#     }
+#
+#
+# class PaymentMethod(Block):
+#     contains = {
+#         "cash_on_delivery": {
+#             "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[1]/label/input"),
+#             "class": RadioButton,
+#         },
+#         "add_comments": {
+#             "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/p[3]/textarea"),
+#             "class": InputField,
+#         },
+#         "terms_and_conditions": {
+#             "locator": ("XPATH", "//*[@id='collapse-payment-method']/div/div[2]/div/input[1]"),
+#             "class": CheckBox,
+#         },
+#         "continue_button": {"locator": ("ID", "button-payment-method"), "class": Clickable},
+#     }
+#
+#
+# class ConfirmOrderButton(Clickable):
+#     contains = {"confirm_order_button": {"locator": ("ID", "button-confirm")}}
 
 
 class CheckoutPage(BasePage):
@@ -149,35 +141,37 @@ class CheckoutPage(BasePage):
 
     contains = {
         "checkout_options": {
-            "locator": ("XPATH", "//*[@id='collapse-checkout-option']/div/div/div[1]"),
+            "locator": ("XPATH", '//div[@id="collapse-checkout-option"]'),
             "class": CheckoutOptions,
         },
-        "checkout_continue_button": {
-            "locator": ("XPATH", "//*[@id='button-account']"),
-            "class": CheckoutContinueButton,
-        },
-        "returning_customer": {
-            "locator": ("XPATH", "//*[@id='collapse-checkout-option']/div/div/div[2]"),
-            "class": ReturningCustomer,
-        },
-        "billing_form": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-address']/div"),
+        "billing_details": {
+            "locator": ("XPATH", '//div[@id="collapse-payment-address"]'),
             "class": BillingDetails,
         },
-        "delivery_form": {
-            "locator": ("XPATH", "//*[@id='collapse-shipping-address']/div"),
-            "class": DeliveryDetails,
-        },
-        "delivery_method": {
-            "locator": ("XPATH", "//*[@id='collapse-shipping-method']/div"),
-            "class": DeliveryMethod,
-        },
-        "payment_metod": {
-            "locator": ("XPATH", "//*[@id='collapse-payment-method']/div"),
-            "class": PaymentMethod,
-        },
-        "confirm_order": {
-            "locator": ("XPATH", "//*[@id='collapse-checkout-confirm']/div"),
-            "class": ConfirmOrderButton,
-        },
+        # "delivery_form": {
+        #     "locator": ("XPATH", '//div[@id="collapse-shipping-address"]'),
+        #     "class": DeliveryDetails,
+        # },
+        # "delivery_method": {
+        #     "locator": ("XPATH", '//div[@id="collapse-shipping-method"]'),
+        #     "class": DeliveryMethod,
+        # },
+        # "payment_metod": {
+        #     "locator": ("XPATH", '//div[@id="collapse-payment-method"]'),
+        #     "class": PaymentMethod,
+        # },
+        # "confirm_order": {
+        #     "locator": ("XPATH", '//div[@id="collapse-checkout-confirm"]'),
+        #     "class": ConfirmOrderButton,
+        # },
     }
+#
+# if __name__ == "__main__":
+#     from oct.drivers import get_driver
+#     from oct.pages import ProductPage
+#     driver = get_driver("chrome", grid=None)
+#     product_page = ProductPage(driver)
+#     product_page.load("http", "34.107.116.227")
+#     product_page.cart.add()
+#     page = CheckoutPage(driver)
+#     page.load("http", "34.107.116.227")
