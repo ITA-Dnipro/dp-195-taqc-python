@@ -1,8 +1,5 @@
 testcases:
     AddAddressTest:
-        uid: data_file_tries
-        groups: [sanity, regression, ha]
-
         parameters:
             valid_data: [
                 {

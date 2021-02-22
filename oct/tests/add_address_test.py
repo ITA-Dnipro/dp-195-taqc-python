@@ -12,12 +12,13 @@ class AddAddressTest(Testcase):
         self.driver = get_driver(browser, grid)
         self.page = AddAddressPage(self.driver)
         self.page.add_logged_in_cookie_session(protocol, host, email, password)
-        self.page.load(protocol, host)
         loop.mark(self.valid_data, testdata=self.parameters["valid_data"])
         loop.mark(self.invalid_data, testdata=self.parameters["invalid_data"])
 
     @test
     def valid_data(self, steps, testdata, protocol, host) -> None:
+        with steps.start("open page"):
+            self.page.load(protocol, host)
         with steps.start("first step", description="Fill AddAddress Form"):
             self.page.form.fill_out(
                 first_name=testdata["first_name"],
@@ -34,12 +35,15 @@ class AddAddressTest(Testcase):
         with steps.start("second step", description="Click Submit button Form"):
             self.page.form.submit()
         with steps.start("third step", description="Success alert appears"):
-            assert testdata["excpected_valid_data"] in self.page.get_alerts()
-        with steps.start("forth step", description="Click button Create new address"):
-            self.page.load(protocol, host)
+            if testdata["excpected_valid_data"] in self.page.get_alerts():
+                self.passed()
+            else:
+                self.failed()
 
     @test
     def invalid_data(self, steps, testdata, protocol, host) -> None:
+        with steps.start("open page"):
+            self.page.load(protocol, host)
         with steps.start("first step", description="Fill AddAddress Form"):
             self.page.form.fill_out(
                 first_name=testdata["first_name"],
@@ -56,9 +60,10 @@ class AddAddressTest(Testcase):
         with steps.start("second step", description="Click Submit button Form"):
             self.page.form.submit()
         with steps.start("third step", description="Success alert appears"):
-            assert testdata["excpected_valid_data"] not in self.page.get_alerts()
-        with steps.start("forth step", description="Click button Create new address"):
-            self.page.load(protocol, host)
+            if testdata["excpected_valid_data"] not in self.page.get_alerts():
+                self.passed()
+            else:
+                self.failed()
 
     @cleanup
     def close(self) -> None:

@@ -3,7 +3,7 @@
 from pyats import aetest
 
 from oct.tests import test_run
-from oct.tests import return_page_test, shopping_cart_test, search_page_test
+from oct.tests import return_page_test, shopping_cart_test, search_page_test, add_address_test
 
 
 class ScriptCommonSetup(aetest.CommonSetup):
@@ -26,6 +26,10 @@ class SearchInTitlesTest(search_page_test.SearchInTitlesTest):
 
 
 class SearchSortingTest(search_page_test.SearchSortingTest):
+    """..."""
+
+
+class AddAddressTest(add_address_test.AddAddressTest):
     """..."""
 
 
