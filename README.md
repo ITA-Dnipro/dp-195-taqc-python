@@ -130,7 +130,7 @@ docker-compose -f docker-compose-selenium.yaml up -d
 
 In your browser open http://34.107.116.227 and manually create test user account with followin credantials
 ```bash
-login: testuser
+email: testuser@mail.com
 password: testpass6
 ```
 
