@@ -1,21 +1,23 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 from pyats.aetest import Testcase, test, setup, cleanup, loop
+
+from oct.drivers import get_driver
 from oct.pages import AddAddressPage
-from oct.tests import test_run
 
 
 class AddAddressTest(Testcase):
     @setup
-    def open(self, host: str, email: str, password: str) -> None:
-        self.page = AddAddressPage()
-        self.page.add_logged_in_cookie_session(host, email, password)
-        self.page.load(host)
+    def open(self, browser, grid, protocol, host, email, password) -> None:
+        self.driver = get_driver(browser, grid)
+        self.page = AddAddressPage(self.driver)
+        self.page.add_logged_in_cookie_session(protocol, host, email, password)
+        self.page.load(protocol, host)
         loop.mark(self.valid_data, testdata=self.parameters["valid_data"])
         loop.mark(self.invalid_data, testdata=self.parameters["invalid_data"])
 
     @test
-    def valid_data(self, steps, testdata, host) -> None:
+    def valid_data(self, steps, testdata, protocol, host) -> None:
         with steps.start("first step", description="Fill AddAddress Form"):
             self.page.form.fill_out(
                 first_name=testdata["first_name"],
@@ -34,10 +36,10 @@ class AddAddressTest(Testcase):
         with steps.start("third step", description="Success alert appears"):
             assert testdata["excpected_valid_data"] in self.page.get_alerts()
         with steps.start("forth step", description="Click button Create new address"):
-            self.page.load(host)
+            self.page.load(protocol, host)
 
     @test
-    def invalid_data(self, steps, testdata, host) -> None:
+    def invalid_data(self, steps, testdata, protocol, host) -> None:
         with steps.start("first step", description="Fill AddAddress Form"):
             self.page.form.fill_out(
                 first_name=testdata["first_name"],
@@ -56,12 +58,8 @@ class AddAddressTest(Testcase):
         with steps.start("third step", description="Success alert appears"):
             assert testdata["excpected_valid_data"] not in self.page.get_alerts()
         with steps.start("forth step", description="Click button Create new address"):
-            self.page.load(host)
+            self.page.load(protocol, host)
 
     @cleanup
     def close(self) -> None:
         self.page.close()
-
-
-if __name__ == "__main__":
-    test_run("datafile/add_address_data.yaml")
