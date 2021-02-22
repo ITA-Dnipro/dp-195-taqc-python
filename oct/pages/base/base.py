@@ -1,15 +1,16 @@
 """Module contains base classes for page objects and webelements."""
 
-import time
 import contextlib
+import time
+import uuid
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
 from requests import Request, Session
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 def timeout(timesec: int):
@@ -39,6 +40,7 @@ class Base(ABC):
         self._base = base
 
     contains: Optional[dict] = None
+
     # contains class attribute contains page's webelements. Webelements set
     # is the page specific.
     # Example:
@@ -158,6 +160,16 @@ class Page(Base):
         session = Session()
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
+
+    def get_screenshot(self):
+        """Create screenshot of current page."""
+
+        name = uuid.uuid4()
+        screenshot_object = self._base.find_element_by_tag_name("body")
+        total_height = screenshot_object.size["height"]
+        self._base.set_window_size(1400, total_height)
+        self._base.save_screenshot(f"oct/tests/screenshot/{name}.png")
+        return name
 
     def close(self) -> None:
         """Close Page."""
