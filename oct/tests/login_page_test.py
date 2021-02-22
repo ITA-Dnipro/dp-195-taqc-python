@@ -32,8 +32,7 @@ class LoginPageTest(Testcase):
             self.page.load(protocol, host)
 
         with steps.start("fill data"):
-            self.page.form.fill_out(email=testdata["email"],
-                                    password=testdata["password"])
+            self.page.form.fill_out(email=testdata["email"], password=testdata["password"])
 
         with steps.start("submit"):
             self.page.form.submit()
@@ -55,8 +54,7 @@ class LoginPageTest(Testcase):
             self.page.load(protocol, host)
 
         with steps.start("fill data"):
-            self.page.form.fill_out(email=testdata["email"],
-                                    password=testdata["password"])
+            self.page.form.fill_out(email=testdata["email"], password=testdata["password"])
 
         with steps.start("submit"):
             self.page.form.submit()
@@ -70,7 +68,6 @@ class LoginPageTest(Testcase):
                     self.page.get_screenshot(),
                 )
                 self.failed(reason="Email or password is invalid")
-
 
     @cleanup
     def close(self) -> None:
