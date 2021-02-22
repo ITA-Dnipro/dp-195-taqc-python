@@ -2,6 +2,7 @@
 
 import contextlib
 import time
+import uuid
 from abc import ABC
 from typing import Any, Union, Type, List, Optional
 
@@ -105,7 +106,7 @@ class Base(ABC):
         return elcls(element)
 
     def get_list_of_instances(
-            self, find_by: str, value: str, elcls: Type["Element"]
+        self, find_by: str, value: str, elcls: Type["Element"]
     ) -> List["Element"]:
         """Create instance of Element class."""
 
@@ -149,7 +150,7 @@ class Page(Base):
         self._setup()
 
     def add_logged_in_cookie_session(
-            self, protocol: str, host: str, email: str, password: str
+        self, protocol: str, host: str, email: str, password: str
     ) -> None:
         """Add logged in cookie session."""
 
@@ -160,13 +161,15 @@ class Page(Base):
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
-    def get_screenshot(self, name):
+    def get_screenshot(self):
         """Create screenshot of current page."""
 
-        screenshot_object = self._base.find_element_by_tag_name('body')
+        name = uuid.uuid4()
+        screenshot_object = self._base.find_element_by_tag_name("body")
         total_height = screenshot_object.size["height"]
         self._base.set_window_size(1400, total_height)
         self._base.save_screenshot(f"oct/tests/screenshot/{name}.png")
+        return name
 
     def close(self) -> None:
         """Close Page."""

@@ -2,19 +2,20 @@
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 import logging
 
-from oct.drivers import get_driver
-from oct.pages import ProductPage, ShoppingCartPage
 from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup
+from oct.drivers import get_driver
+from oct.pages import ProductPage, ShoppingCartPage
 
 from settings import log_level, logger
-import uuid
 
 
 class GiftCertificateBonusTest(Testcase):
     @setup
     def precondition(self, browser, grid, protocol, host, email, password) -> None:
-        log.managed_handlers["tasklog"] = logging.FileHandler("oct/tests/log/GiftCertificateBonus.log", mode="w", delay=True)
+        log.managed_handlers["tasklog"] = logging.FileHandler(
+            "oct/tests/log/GiftCertificateBonus.log", mode="w", delay=True
+        )
         log.managed_handlers.tasklog.setLevel(log_level)
         logger.addHandler(log.managed_handlers.tasklog)
         self.driver = get_driver(browser, grid)
@@ -39,9 +40,10 @@ class GiftCertificateBonusTest(Testcase):
             if actual_result == expected_result:
                 self.passed()
             else:
-                name = uuid.uuid4()
-                self.page.get_screenshot(name)
-                logger.error(log.utils.banner(f"You can find screenshot of this error here: oct/tests/screenshot/{name}.png"))
+                logger.error(
+                    "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
+                    self.page.get_screenshot(),
+                )
                 self.failed(reason="Incorrect result")
 
     @cleanup
