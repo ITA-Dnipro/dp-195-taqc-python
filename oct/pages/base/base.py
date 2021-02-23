@@ -159,6 +159,7 @@ class Page(Base):
         request = Request(method="POST", url=url, data=data)
         session = Session()
         session.send(request.prepare(), verify=False)
+        self._base.get(url)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
     def get_screenshot(self, test_name):
