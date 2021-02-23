@@ -106,7 +106,7 @@ class Base(ABC):
         return elcls(element)
 
     def get_list_of_instances(
-            self, find_by: str, value: str, elcls: Type["Element"]
+        self, find_by: str, value: str, elcls: Type["Element"]
     ) -> List["Element"]:
         """Create instance of Element class."""
 
@@ -150,7 +150,7 @@ class Page(Base):
         self._setup()
 
     def add_logged_in_cookie_session(
-            self, protocol: str, host: str, email: str, password: str
+        self, protocol: str, host: str, email: str, password: str
     ) -> None:
         """Add logged in cookie session."""
 

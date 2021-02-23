@@ -35,7 +35,7 @@ class EmailValidationTest(Testcase):
                 log_error_message(
                     cls_refer=self,
                     test_name="EmailValidationTest",
-                    failed_message="Email is invalid"
+                    failed_message="Email is invalid",
                 )
 
     @test
@@ -55,9 +55,7 @@ class EmailValidationTest(Testcase):
                 self.passed()
             else:
                 log_error_message(
-                    cls_refer=self,
-                    test_name="EmailValidationTest",
-                    failed_message="Email is valid"
+                    cls_refer=self, test_name="EmailValidationTest", failed_message="Email is valid"
                 )
 
     @cleanup

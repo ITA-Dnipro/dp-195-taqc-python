@@ -32,7 +32,7 @@ class SearchInTitlesTest(Testcase):
                     log_error_message(
                         cls_refer=self,
                         test_name="SearchInTitlesTest",
-                        failed_message="Product title does not match the search entry!"
+                        failed_message="Product title does not match the search entry!",
                     )
 
     @cleanup
@@ -63,7 +63,7 @@ class SearchSortingTest(Testcase):
             log_error_message(
                 cls_refer=self,
                 test_name="SearchSortingTest",
-                failed_message="Product title shoud be sorted in alphabetical order!"
+                failed_message="Product title shoud be sorted in alphabetical order!",
             )
 
     @test
@@ -76,7 +76,7 @@ class SearchSortingTest(Testcase):
             log_error_message(
                 cls_refer=self,
                 test_name="SearchSortingTest",
-                failed_message="Product title shoud be sorted in reverse alphabetical order!"
+                failed_message="Product title shoud be sorted in reverse alphabetical order!",
             )
 
     @test
@@ -89,7 +89,7 @@ class SearchSortingTest(Testcase):
             log_error_message(
                 cls_refer=self,
                 test_name="SearchSortingTest",
-                failed_message="Product prices shoud be sorted in ascending order!"
+                failed_message="Product prices shoud be sorted in ascending order!",
             )
 
     @test
@@ -102,7 +102,7 @@ class SearchSortingTest(Testcase):
             log_error_message(
                 cls_refer=self,
                 test_name="SearchSortingTest",
-                failed_message="Product prices shoud be sorted in descending order!"
+                failed_message="Product prices shoud be sorted in descending order!",
             )
 
     @cleanup

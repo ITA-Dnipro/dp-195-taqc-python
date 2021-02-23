@@ -36,7 +36,7 @@ class GiftCertificateBonusTest(Testcase):
                 log_error_message(
                     cls_refer=self,
                     test_name="GiftCertificateBonusTest",
-                    failed_message="Incorrect result"
+                    failed_message="Incorrect result",
                 )
 
     @cleanup
