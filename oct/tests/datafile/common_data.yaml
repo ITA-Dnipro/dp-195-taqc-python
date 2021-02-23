@@ -3,3 +3,4 @@ extends:
        - shopping_cart_data.yaml
        - search_page_data.yaml
        - add_address_data.yaml
+       - login_page_data.yaml
