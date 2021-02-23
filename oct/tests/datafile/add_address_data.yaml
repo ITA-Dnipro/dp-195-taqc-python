@@ -1,0 +1,55 @@
+testcases:
+    AddAddressTest:
+        parameters:
+            valid_data: [
+                {
+                    first_name: "Hol",
+                    last_name: "Sin",
+                    company: "RTY",
+                    address_1: "Tec Lane, 1084",
+                    address_2: "Br Street, 171",
+                    city: "Pho",
+                    post_code: "85008",
+                    country: "Angola",
+                    region_state: "Bie",
+                    default_address: "yes",
+                    excpected_valid_data: "Your address has been successfully added"
+                },
+                {
+                first_name: "Wolfeschlegelsteinhausenbergerdo",
+                last_name: "Wolfhlegelsteinhausenbergerdorff",
+                company: "Standart Chartereted inc.",
+                address_1: "Boone Crockett Lane, 3416",
+                address_2: "Plainfield Avenue, 4342",
+                city: "Palmdale",
+                post_code: "93552454",
+                country: "Egypt",
+                region_state: "Aswan",
+                default_address: "yes",
+                excpected_valid_data: "Your address has been successfully added"
+                },
+                    ]
+            invalid_data: [
+                {
+                first_name: "     ",
+                last_name: "     ",
+                company: "     ",
+                address_1: "     ",
+                address_2: "     ",
+                city: "     ",
+                post_code: "     ",
+                default_address: "yes",
+                excpected_valid_data: "Your address has been successfully added"
+                },
+                {
+                first_name: "",
+                last_name: "",
+                company: "",
+                address_1: "",
+                address_2: "",
+                city: "",
+                post_code: "",
+                default_address: "yes",
+                excpected_valid_data: "Your address has been successfully added"
+                },
+                    ]

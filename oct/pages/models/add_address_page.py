@@ -4,8 +4,8 @@ from pages.base.elements import RadioButton, Form, InputField, RadioButtonGroup,
 
 class DefaultAddress(RadioButtonGroup):
     contains = {
-        "yes": {"locator": ("XPATH", "/label[1]/input"), "class": RadioButton},
-        "no": {"locator": ("XPATH", "/label[2]/input"), "class": RadioButton},
+        "yes": {"locator": ("XPATH", "//label[1]/input"), "class": RadioButton},
+        "no": {"locator": ("XPATH", "//label[2]/input"), "class": RadioButton},
     }
 
 
@@ -27,6 +27,7 @@ class AddAddressForm(Form):
     }
 
     def fill_out(self, **kwargs):
+        self.country.select(kwargs.get("country"))
         self.first_name.fill(kwargs.get("first_name"))
         self.last_name.fill(kwargs.get("last_name"))
         self.company.fill(kwargs.get("company"))
@@ -34,9 +35,8 @@ class AddAddressForm(Form):
         self.address_2.fill(kwargs.get("address_2"))
         self.city.fill(kwargs.get("city"))
         self.post_code.fill(kwargs.get("post_code"))
-        self.country.select(kwargs.get("country"))
         self.region_state.select(kwargs.get("region_state"))
-        self.default_address.select_option(kwargs.get("region_state"))
+        self.default_address.select_option(kwargs.get("default_address"))
 
 
 class AddAddressPage(BasePage):
