@@ -9,7 +9,7 @@ class InputField(Element):
     """Any type of a writable input."""
 
     def fill(self, text: str) -> None:
-        if text is not None:
+        if text not in ["", None]:
             self._base.clear()
             self._base.send_keys(text)
 
@@ -115,7 +115,8 @@ class Link(Element):
 class DropDown(Element):
     def select(self, name):
         """Click it."""
-        self._base.find_element_by_xpath(f'//option[text()="{name}"]').click()
+        if name:
+            self._base.find_element_by_xpath(f'//option[text()="{name}"]').click()
 
     def get_value(self, name) -> str:
         option = self._base.find_element_by_xpath(f'//option[text()="{name}"]')

@@ -13,8 +13,8 @@ class GiftCertificateBonusTest(Testcase):
         self.tasklog = log_change_file_handler("GiftCertificateBonusTest")
         self.driver = get_driver(browser, grid)
         self.page = ProductPage(self.driver)
-        self.page.load(protocol, host)
         self.page.add_logged_in_cookie_session(protocol, host, email, password)
+        self.page.load(protocol, host)
         self.page.cart.add()
         self.page = ShoppingCartPage(self.driver)
 
