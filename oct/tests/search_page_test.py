@@ -1,24 +1,17 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
 # pylint: disable=not-callable # pyATS-related exclusion
-import logging
-
-from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup
 from oct.drivers import get_driver
 from oct.pages import SearchPage
 
-from settings import log_level, logger
+from settings import logger, log_error_message, log_change_file_handler
 
 
 class SearchInTitlesTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
-        log.managed_handlers["tasklog"] = logging.FileHandler(
-            "oct/tests/log/SearchInTitles.log", mode="w", delay=True
-        )
-        log.managed_handlers.tasklog.setLevel(log_level)
-        logger.addHandler(log.managed_handlers.tasklog)
+        self.tasklog = log_change_file_handler("SearchInTitles")
         self.driver = get_driver(browser, grid)
         self.page = SearchPage(self.driver)
 
@@ -36,26 +29,22 @@ class SearchInTitlesTest(Testcase):
             product_titles = (product["title"] for product in search_result)
             for title in product_titles:
                 if keyword.lower() not in title.lower():
-                    logger.error(
-                        "You can find screenshot of this error here:" "oct/tests/screenshot/%s.png",
-                        self.page.get_screenshot(),
+                    log_error_message(
+                        cls_refer=self,
+                        test_name="SearchInTitlesTest",
+                        failed_message="Product title does not match the search entry!"
                     )
-                    self.failed("Product title does not match the search entry!")
 
     @cleanup
     def close(self) -> None:
-        logger.removeHandler(log.managed_handlers.tasklog)
+        logger.removeHandler(self.tasklog)
         self.page.close()
 
 
 class SearchSortingTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
-        log.managed_handlers["tasklog"] = logging.FileHandler(
-            "oct/tests/log/SearchSorting.log", mode="w", delay=True
-        )
-        log.managed_handlers.tasklog.setLevel(log_level)
-        logger.addHandler(log.managed_handlers.tasklog)
+        self.tasklog = log_change_file_handler("SearchSorting")
         self.driver = get_driver(browser, grid)
         self.page = SearchPage(self.driver)
 
@@ -71,11 +60,11 @@ class SearchSortingTest(Testcase):
         product_titles = [product["title"].lower() for product in sort_result]
         expected_order = sorted(product_titles)
         if product_titles != expected_order:
-            logger.error(
-                "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                self.page.get_screenshot(),
+            log_error_message(
+                cls_refer=self,
+                test_name="SearchSortingTest",
+                failed_message="Product title shoud be sorted in alphabetical order!"
             )
-            self.failed("Product title shoud be sorted in alphabetical order!")
 
     @test
     def alphabetic_descending(self):
@@ -84,11 +73,11 @@ class SearchSortingTest(Testcase):
         product_titles = [product["title"].lower() for product in sort_result]
         expected_order = sorted(product_titles, reverse=True)
         if product_titles != expected_order:
-            logger.error(
-                "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                self.page.get_screenshot(),
+            log_error_message(
+                cls_refer=self,
+                test_name="SearchSortingTest",
+                failed_message="Product title shoud be sorted in reverse alphabetical order!"
             )
-            self.failed("Product title shoud be sorted in reverse alphabetical order!")
 
     @test
     def price_ascending(self):
@@ -97,11 +86,11 @@ class SearchSortingTest(Testcase):
         product_prices = [product["price"] for product in sort_result]
         expected_order = sorted(product_prices)
         if product_prices != expected_order:
-            logger.error(
-                "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                self.page.get_screenshot(),
+            log_error_message(
+                cls_refer=self,
+                test_name="SearchSortingTest",
+                failed_message="Product prices shoud be sorted in ascending order!"
             )
-            self.failed("Product prices shoud be sorted in ascending order!")
 
     @test
     def price_descending(self):
@@ -110,13 +99,13 @@ class SearchSortingTest(Testcase):
         product_prices = [product["price"] for product in sort_result]
         expected_order = sorted(product_prices, reverse=True)
         if product_prices != expected_order:
-            logger.error(
-                "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                self.page.get_screenshot(),
+            log_error_message(
+                cls_refer=self,
+                test_name="SearchSortingTest",
+                failed_message="Product prices shoud be sorted in descending order!"
             )
-            self.failed("Product prices shoud be sorted in descending order!")
 
     @cleanup
     def close(self) -> None:
-        logger.removeHandler(log.managed_handlers.tasklog)
+        logger.removeHandler(self.tasklog)
         self.page.close()

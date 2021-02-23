@@ -161,10 +161,10 @@ class Page(Base):
         session.send(request.prepare(), verify=False)
         self._base.add_cookie({"name": "OCSESSID", "value": session.cookies["OCSESSID"]})
 
-    def get_screenshot(self):
+    def get_screenshot(self, test_name):
         """Create screenshot of current page."""
 
-        name = uuid.uuid4()
+        name = f"{test_name}_{uuid.uuid4()}"
         screenshot_object = self._base.find_element_by_tag_name("body")
         total_height = screenshot_object.size["height"]
         self._base.set_window_size(1400, total_height)

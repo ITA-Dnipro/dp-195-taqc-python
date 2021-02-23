@@ -1,23 +1,16 @@
 # pylint: disable=no-self-use # pyATS-related exclusion
 # pylint: disable=attribute-defined-outside-init # pyATS-related exclusion
-import logging
-
-from pyats import log
 from pyats.aetest import Testcase, test, setup, cleanup, loop
 from oct.drivers import get_driver
 from oct.pages import ReturnPage
 
-from settings import log_level, logger
+from settings import logger, log_error_message, log_change_file_handler
 
 
 class EmailValidationTest(Testcase):
     @setup
     def start(self, browser, grid) -> None:
-        log.managed_handlers["tasklog"] = logging.FileHandler(
-            "oct/tests/log/EmailValidationTest.log", mode="w", delay=True
-        )
-        log.managed_handlers.tasklog.setLevel(log_level)
-        logger.addHandler(log.managed_handlers.tasklog)
+        self.tasklog = log_change_file_handler("EmailValidationTest")
         self.driver = get_driver(browser, grid)
         self.page = ReturnPage(self.driver)
         loop.mark(self.valid_data, testdata=self.parameters["valid_data"])
@@ -39,11 +32,11 @@ class EmailValidationTest(Testcase):
             if message not in self.page.get_alerts():
                 self.passed()
             else:
-                logger.error(
-                    "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                    self.page.get_screenshot(),
+                log_error_message(
+                    cls_refer=self,
+                    test_name="EmailValidationTest",
+                    failed_message="Email is invalid"
                 )
-                self.failed(reason="Email is invalid")
 
     @test
     def invalid_data(self, steps, protocol, host, testdata, message) -> None:
@@ -61,13 +54,13 @@ class EmailValidationTest(Testcase):
             if message in self.page.get_alerts():
                 self.passed()
             else:
-                logger.error(
-                    "You can find screenshot of this error here: oct/tests/screenshot/%s.png",
-                    self.page.get_screenshot(),
+                log_error_message(
+                    cls_refer=self,
+                    test_name="EmailValidationTest",
+                    failed_message="Email is valid"
                 )
-                self.failed(reason="Email is valid")
 
     @cleanup
     def close(self) -> None:
-        logger.removeHandler(log.managed_handlers.tasklog)
+        logger.removeHandler(self.tasklog)
         self.page.close()
