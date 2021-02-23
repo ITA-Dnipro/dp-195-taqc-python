@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea/
-*.png
+screenhot/
 
 # C extensions
 *.so
@@ -56,7 +56,7 @@ testdata/
 *.pot
 
 # Django stuff:
-*.log
+log/
 local_settings.py
 db.sqlite3
 
