@@ -1,0 +1,26 @@
+testcases:
+    LoginTest:
+        parameters:
+            valid_data: [
+            {
+                email: "testuser@mail.com",
+                password: "testpass6"
+            }
+            ]
+            invalid_data: [
+                {
+                email: "north@mail.com",
+                password: "north"
+            },
+            {
+                email: "abra1@gmail.com",
+                password: "cadabra1"
+            },
+            {
+                email: "2@2.3",
+                password: "2"
+            }
+            ]
+
+            message:  "Warning: No match for E-Mail Address and/or Password."
+
